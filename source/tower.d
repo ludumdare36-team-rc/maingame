@@ -4,16 +4,18 @@ import game.floor;
  *
  */
 struct Tower{
-    private Floor[] floors;
-    void floorAdd(Floor floor){
+    Floor[] floors;
+    void add(Floor floor){
         floors ~= floor;
     }
-    Floor floorRemove(int n){
-        Floor floor = floors[n];
-        floors = floors[0..n-1] ~ floors[n+1..floors.length];
-        return floor;
+    bool del(int n){
+        if(n >= floors.length){
+            return false;
+        }
+        floors = floors[0..n] ~ floors[n+1..floors.length];
+        return true;
     }
-    Floor get(int n){
+    ref Floor get(int n){
         return floors[n];
     }
 }

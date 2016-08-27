@@ -3,11 +3,11 @@ module game.cell;
  *
  */
 enum CellType {
-    Broken = -1,
-    Empty = 0,
-    House = 1,
-    Ferm = 2,
-    Factory = 3,
+    Broken,
+    Empty,
+    House,
+    Ferm,
+    Factory,
 }
 struct Cell{
     private int cellType = CellType.Empty;
@@ -16,5 +16,8 @@ struct Cell{
     }
     int getType(){
         return cellType;
+    }
+    void brake(){
+        cellType = CellType.Broken;
     }
 }

@@ -4,16 +4,21 @@ import game.cell;
  *
  */
 struct Floor{
-    private Cell[] cells;
-    void cellSet(int n, Cell cell){
+    Cell[] cells;
+    this(Cell[] cell){
+        this.cells = cell;
+    }
+    void add(Cell cell){
         cells ~= cell;
     }
-    Cell cellRemove(int n){
-        Cell cell = cells[n];
-        cells = cells[0..n-1] ~ cells[n+1..cells.length];
-        return cell;
+    bool del(int n){
+        if(n >= cells.length){
+            return false;
+        }
+        cells = cells[0..n] ~ cells[n+1..cells.length];
+        return true;
     }
-    Cell get(int n){
+    ref Cell get(int n){
         return cells[n];
     }
 }
