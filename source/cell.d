@@ -32,7 +32,16 @@ struct Cell{
     void draw(){
         import std.stdio;
         "draw cell".writeln;
-        if(_cellType == CellType.House)drawHouse;
+        switch (_cellType) {
+            case CellType.Empty:
+                drawEmpty;
+                break;
+            case CellType.House:
+                drawHouse;
+                break;
+            default:
+                assert(0);
+        }
     }
     
     ///
@@ -50,20 +59,25 @@ struct Cell{
     }
     
     private{
-        CellType _cellType = CellType.House;
+        CellType _cellType = CellType.Empty;
         Entity[] _entities;
         int _textureIndex;
         int _isEdge = 0;
         int _life = 0;
         
+        void drawEmpty(){
+            import game.resources;
+            animations("cell_empty", 1).index(0).draw;
+        }
+        
         void drawHouse(){
             import game.resources;
             if(_isEdge == 0){
-                animations("roomA", 7).index(2).draw;
+                animations("cell_house", 7).index(2).draw;
             }else if(_isEdge == -1){
-                animations("roomA", 7).index(0).draw;
+                animations("cell_house", 7).index(0).draw;
             }else{
-                animations("roomA", 7).index(1).draw;
+                animations("cell_house", 7).index(1).draw;
             }
         }
         

@@ -53,6 +53,12 @@ class Tower{
             translate(0, Cell.size, 0);
         }
         popMatrix;
+        
+        import game.resources;
+        pushMatrix;
+        translate(cursorPosition[0]*Cell.size, cursorPosition[1]*Cell.size, 0);
+        animations("cursor", 1).index(0).draw;
+        popMatrix;
     }
     
     void dropFloor(in size_t n){
@@ -70,9 +76,36 @@ class Tower{
         return _cells[position[1]][position[0]];
     }
     
+    ///
+    Vector2i cursorPosition()const{
+        return _cursorPosition;
+    }
+    
+    ///
+    void cursorMoveLeft(){
+        cursorPosition = cursorPosition + Vector2i(-1, 0);
+    }
+    
+    ///
+    void cursorMoveRight(){
+        cursorPosition = cursorPosition + Vector2i(1, 0);
+    }
+    
+    ///
+    void cursorMoveUp(){
+        cursorPosition = cursorPosition + Vector2i(0, 1);
+    }
+    
+    ///
+    void cursorMoveDown(){
+        cursorPosition = cursorPosition + Vector2i(0, -1);
+    }
+    
     private{
         Cell[][] _cells;
         Vector2i _size;
+        
+        Vector2i _cursorPosition = Vector2i.zero;
         
         bool deleteFloor(in size_t n){
             if(n >= _cells.length){
@@ -80,6 +113,15 @@ class Tower{
             }
             _cells = _cells[0..n] ~ _cells[n+1.._cells.length];
             return true;
+        }
+        
+        ///
+        void cursorPosition(in Vector2i p){
+            if(p[0] < 0)return;
+            if(p[0] >= _size[0])return;
+            if(p[1] < 0)return;
+            if(p[1] >= _size[1])return;
+            _cursorPosition = p;
         }
     }
 }

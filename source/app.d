@@ -36,7 +36,26 @@ class Game {
             "draw game".writeln;
         }
 
-        void keyPressed(ar.utils.KeyType key){}
+        void keyPressed(ar.utils.KeyType key){
+            switch (key) {
+                case ar.utils.KeyType.W:
+                    _tower.cursorMoveUp;
+                    break;
+                case ar.utils.KeyType.S:
+                    _tower.cursorMoveDown;
+                    break;
+                case ar.utils.KeyType.A:
+                    _tower.cursorMoveLeft;
+                    break;
+                case ar.utils.KeyType.D:
+                    _tower.cursorMoveRight;
+                    break;
+                case ar.utils.KeyType.Enter:
+                    // _tower.cursorMoveRight;
+                    break;
+                default:
+            }
+        }
 
         void keyReleased(ar.utils.KeyType key){}
 
@@ -77,6 +96,7 @@ class TestApp : ar.app.BaseApp{
 		ar.graphics.blendMode = ar.graphics.BlendMode.Alpha;
         _state = GameStatus.Opening;
         
+        ar.graphics.background(146, 173, 148);
     }
 
     override void update(){
@@ -162,7 +182,7 @@ class TestApp : ar.app.BaseApp{
     private{
         GameStatus _state;
         Game _game;
-        int _scale = 3;
+        int _scale = 4;
     }
 }
 
