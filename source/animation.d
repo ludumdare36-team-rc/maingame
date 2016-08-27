@@ -26,9 +26,9 @@ class Animation {
             loadTextures;
             
             _mesh.addTexCoord(0, 0);_mesh.addVertex(0, 0, 0);
-            _mesh.addTexCoord(0, 1);_mesh.addVertex(height, 0, 0);
-            _mesh.addTexCoord(1, 0);_mesh.addVertex(0, width, 0);
-            _mesh.addTexCoord(1, 1);_mesh.addVertex(width, height, 0);
+            _mesh.addTexCoord(0, 1);_mesh.addVertex(width, 0, 0);
+            _mesh.addTexCoord(-1, 0);_mesh.addVertex(0, height, 0);
+            _mesh.addTexCoord(-1, 1);_mesh.addVertex(width, height, 0);
             
             _mesh.addIndex(0);
             _mesh.addIndex(1);
