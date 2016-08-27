@@ -1,0 +1,8 @@
+.dub
+dub.selections.json
+*.o
+*.a
+*.obj
+*.ase
+ludumdare36-maingame
+__test__library__
