@@ -1,6 +1,9 @@
 module game.animation;
 import armos.graphics;
+<<<<<<< HEAD
 import armos.math;
+=======
+>>>>>>> cf374d6287d1a8bd3d3f985c1c706acda44f0015
 
 /++
 +/
