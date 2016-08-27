@@ -17,7 +17,7 @@ class Game {
     import game.tower;
     public{
         void setup(){
-            _tower = new Tower(ar.math.Vector2i(5, 6));
+            _tower = new Tower(ar.math.Vector2i(5, 2));
             import std.stdio;
             "setup game".writeln;
         }
@@ -87,7 +87,9 @@ class TestApp : ar.app.BaseApp{
 
     override void draw(){
         ar.graphics.pushMatrix;
-        ar.graphics.scale(scale);
+        ar.graphics.translate(0, ar.app.windowSize[1], 0);
+        ar.graphics.scale(_scale);
+        ar.graphics.scale(1f, -1f, 1f);
         
         if(_game){
             _game.draw();
@@ -114,13 +116,17 @@ class TestApp : ar.app.BaseApp{
 
     override void mouseMoved(ar.math.Vector2i position, int button){
         if(_game){
-            _game.mouseMoved(position, button);
+            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
+            _game.mouseMoved(flipped/_scale, button);
+            import std.stdio;
+            (flipped/_scale).writeln;
         }
     }
 
     override void mousePressed(ar.math.Vector2i position, int button){
         if(_game){
-            _game.mousePressed(position, button);
+            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
+            _game.mousePressed(flipped/_scale, button);
         }
         
         switch (_state) {
@@ -148,14 +154,15 @@ class TestApp : ar.app.BaseApp{
 
     override void mouseReleased(ar.math.Vector2i position, int button){
         if(_game){
-            _game.mouseReleased(position, button);
+            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
+            _game.mouseReleased(flipped/_scale, button);
         }
     }
 
     private{
         GameStatus _state;
         Game _game;
-        int scale = 3;
+        int _scale = 3;
     }
 }
 
