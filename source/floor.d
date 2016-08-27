@@ -3,7 +3,7 @@ import game.cell;
 /**
  *
  */
-struct Floor{
+class Floor{
     Cell[] cells;
     this(Cell[] cell){
         this.cells = cell;
