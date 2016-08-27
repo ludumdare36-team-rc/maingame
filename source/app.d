@@ -17,7 +17,7 @@ class Game {
     import game.tower;
     public{
         void setup(){
-            _tower = new Tower(ar.math.Vector2i(5, 2));
+            _tower = new Tower(ar.math.Vector2i(5, 1));
             import std.stdio;
             "setup game".writeln;
         }

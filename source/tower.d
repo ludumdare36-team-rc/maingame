@@ -30,6 +30,14 @@ class Tower{
         import std.stdio;
         _cells.length.writeln;
         _cells[0].length.writeln;
+        
+        foreach (int f, floor; _cells) {
+            bool isBrokenFloor = true;
+            foreach (ref cell; floor) {
+                isBrokenFloor = isBrokenFloor && cell.type == CellType.Broken;
+            }
+            if(isBrokenFloor) dropFloor(f);
+        }
     };
     
     void draw(){

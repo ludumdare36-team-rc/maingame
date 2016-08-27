@@ -16,7 +16,7 @@ struct Cell{
     import game.entity;
     
     ///
-    int getType(){
+    int type()const{
         return _cellType;
     }
     
@@ -35,6 +35,7 @@ struct Cell{
         if(_cellType == CellType.House)drawHouse;
     }
     
+    ///
     void dropEntity(in int height){
         import std.algorithm;
         import armos.math;
@@ -43,7 +44,8 @@ struct Cell{
         }
     }
     
-    void isEdge(int v){
+    ///
+    void isEdge(in int v){
         _isEdge = v;
     }
     
@@ -52,6 +54,7 @@ struct Cell{
         Entity[] _entities;
         int _textureIndex;
         int _isEdge = 0;
+        int _life = 0;
         
         void drawHouse(){
             import game.resources;
