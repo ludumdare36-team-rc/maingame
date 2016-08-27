@@ -1,0 +1,5 @@
+name "ludumdare36-maingame"
+description "A minimal D application."
+copyright "Copyright © 2015, tanitta"
+authors "team-rc"
+dependency "armos" path="../armos/"
