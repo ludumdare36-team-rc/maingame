@@ -115,22 +115,22 @@ class Tower{
     
     ///
     void cursorMoveLeft(){
-        cursorPosition = cursorPosition + Vector2i(-1, 0);
+        cursorMove(Vector2i(-1, 0));
     }
     
     ///
     void cursorMoveRight(){
-        cursorPosition = cursorPosition + Vector2i(1, 0);
+        cursorMove(Vector2i(1, 0));
     }
     
     ///
     void cursorMoveUp(){
-        cursorPosition = cursorPosition + Vector2i(0, 1);
+        cursorMove(Vector2i(0, 1));
     }
     
     ///
     void cursorMoveDown(){
-        cursorPosition = cursorPosition + Vector2i(0, -1);
+        cursorMove(Vector2i(0, -1));
     }
     
     ///
@@ -191,6 +191,18 @@ class Tower{
             }
             _cells = _cells[0..n] ~ _cells[n+1.._cells.length];
             return true;
+        }
+        
+        ///
+        void cursorMove(Vector2i p){
+            import game.resources;
+            Vector2i before = cursorPosition;
+            cursorPosition = cursorPosition +  p;
+            if(cursorPosition == before){
+                (new armos.audio.Source).buffer(sounds("data/bad")).play;
+            }else{
+                (new armos.audio.Source).buffer(sounds("data/click")).play;
+            }
         }
         
         ///
