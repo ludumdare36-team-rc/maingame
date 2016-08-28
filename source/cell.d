@@ -1,5 +1,9 @@
 module game.cell;
 
+import armos.math;
+import game.entity;
+import game.soldier;
+
 /**
  */
 enum CellType {
@@ -17,28 +21,51 @@ struct Cell{
     
     ///
     CellType type()const{
-        return _cellType;
+        return _type;
+    }
+    
+    void soldierType(in SoldierType t){
+        _soldierType = t;
+        _age = 1;
     }
     
     void type(in CellType type){
         import std.random;
         _textureIndex = uniform(0, 10);
-        _cellType = type;
+        _type = type;
     }
     
     ///
-    void brake(){
-        _cellType = CellType.Broken;
+    void update(in Vector2i pos, ref Entity[] entities){
+        if(_age%(60*30) == 0){
+            import std.stdio;
+            switch (_type) {
+                case CellType.House:
+                //TODO spawn 
+                    "spawn".writeln;
+                    import game.resident;
+                    Resident resident = new Resident();
+                    resident.pos = Vector3i(pos[0], pos[1], 0);
+                    entities ~= resident;
+                    import std.stdio;
+                    entities.length.writeln;
+                    break;
+                case CellType.Factory:
+                //TODO spawn 
+                    break;
+                case CellType.Ferm:
+                //TODO increment remaining of foods
+                    break;
+                default:
+            }
+        }
+        
+        _age++;
     }
-    
-    ///
-    void update(){}
     
     ///
     void draw(){
-        import std.stdio;
-        "draw cell".writeln;
-        switch (_cellType) {
+        switch (_type) {
             case CellType.Empty:
                 drawEmpty;
                 break;
@@ -65,11 +92,13 @@ struct Cell{
     }
     
     private{
-        CellType _cellType = CellType.Empty;
+        CellType _type = CellType.Empty;
+        SoldierType _soldierType = SoldierType.Infantry;
         Entity[] _entities;
         int _textureIndex;
         int _isEdge = 0;
         int _life = 0;
+        ulong _age = 0;;
         
         void drawEmpty(){
             import game.resources;

@@ -1,15 +1,11 @@
-module game.soldier;
+module game.resident;
 
 import game.entity;
 import armos.math.vector;
 
-enum SoldierType{
-    Infantry, 
-}
-
 /++
 +/
-class Soldier : Entity{
+class Resident : Entity{
     public{
         ///
         bool shouldDie(){return _shouldDie;};
@@ -27,13 +23,23 @@ class Soldier : Entity{
         void pos(in Vector3i p){_pos = p;}
         
         ///
-        void setup(){};
+        void setup(){
+            _age = 0;
+        };
         
         ///
-        void update(){};
+        void update(){
+            if(_age > 60*30){
+                _shouldDie = true;
+            }
+        };
         
         ///
-        void draw(){};
+        void draw(){
+            import game.resources;
+            import armos.graphics;
+            animations("resident", 1).index(0).draw;
+        };
         
     }//public
 
@@ -43,4 +49,4 @@ class Soldier : Entity{
         int _life = 10;
         Vector3i _pos;
     }//private
-}//class Soldier
+}//class Resident

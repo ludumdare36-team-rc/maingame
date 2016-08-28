@@ -20,24 +20,18 @@ class Game {
         ///
         void setup(){
             _tower = new Tower(ar.math.Vector2i(6, 1));
-            import std.stdio;
-            "setup game".writeln;
         }
 
         ///
         void update(){
-            updateEntities;
             updateTower;
-            import std.stdio;
-            "update game".writeln;
+            updateEntities;
         }
 
         ///
         void draw(){
-            drawEntities;
             drawTower;
-            import std.stdio;
-            "draw game".writeln;
+            drawEntities;
         }
 
         ///
@@ -84,22 +78,34 @@ class Game {
 
     public{
         void updateEntities(){
-            _entity.each!(e => update);
+            foreach (entity; _entities) {
+                entity.update;
+            }
+            
+            import std.array;
+            _entities = _entities.filter!(e=>!e.shouldDie).array;
         };
         
         void drawEntities(){
-            _entity.each!(e => draw);
+            foreach (entity; _entities) {
+                import std.conv;
+                ar.graphics.pushMatrix;
+                ar.graphics.translate(entity.pos.to!(ar.math.Vector3f));
+                entity.draw;
+                ar.graphics.popMatrix;
+            }
+            // _entities.each!((e){e.draw;});
         }
         
         void updateTower(){
-            _tower.update;
+            _tower.update(_entities);
         };
         
         void drawTower(){
             _tower.draw;
         };
         
-        Entity[] _entity;
+        Entity[] _entities;
         Tower _tower;
     }//private
 }//class Game
@@ -161,8 +167,6 @@ class TestApp : ar.app.BaseApp{
         if(_game){
             auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
             _game.mouseMoved(flipped/_scale, button);
-            import std.stdio;
-            (flipped/_scale).writeln;
         }
     }
 

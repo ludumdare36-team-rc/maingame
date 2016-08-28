@@ -3,6 +3,8 @@ module game.tower;
 import game.floor;
 import game.cell;
 import armos.math;
+import game.entity;
+import game.soldier;
 
 /**
  */
@@ -21,10 +23,12 @@ class Tower{
     }
     
     ///
-    void update(){
-        import std.stdio;
-        _cells.length.writeln;
-        _cells[0].length.writeln;
+    void update(ref Entity[] entities){
+        foreach (int f, floor; _cells) {
+            foreach (int n, ref cell; floor) {
+                cell.update(Vector2i(n, f)*Cell.size, entities);
+            }
+        }
         
         foreach (int f, floor; _cells) {
             bool isBrokenFloor = true;
@@ -97,9 +101,10 @@ class Tower{
     }
     
     ///
-    void buildCellToCurrentCursor(in CellType type){
+    void buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
         if(cell(_cursorPosition).type != type){
             cell(_cursorPosition).type = type;
+            cell(_cursorPosition).soldierType = soldierType;
             if(isFillFloor(_size[1]-1)){
                 addFloor;
             }
