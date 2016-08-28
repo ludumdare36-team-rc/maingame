@@ -61,6 +61,10 @@ struct Cell{
                         break;
                     case CellType.Factory:
                         //TODO spawn 
+                        import game.soldier;
+                        Soldier soldier = new Soldier();
+                        soldier.pos = Vector3i(pos[0], pos[1], 0);
+                        entities ~= soldier;
                         break;
                     case CellType.Ferm:
                         //TODO increment remaining of foods
@@ -84,6 +88,9 @@ struct Cell{
                 break;
             case CellType.Ludder:
                 drawLudder;
+                break;
+            case CellType.Factory:
+                drawFactory;
                 break;
             default:
                 // assert(0);
@@ -150,5 +157,9 @@ struct Cell{
             animations("ludder", 1).index(0).draw;
         }
         
+        void drawFactory(){
+            import game.resources;
+            animations("cell_factory", 2).index(0).draw;
+        }
     }
 }
