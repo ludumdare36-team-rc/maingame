@@ -16,6 +16,7 @@ class Game {
     import std.algorithm;
     import game.entity;
     import game.tower;
+    import game.cell;
     public{
         ///
         void setup(){
@@ -24,8 +25,11 @@ class Game {
             _scale = (new TestApp)._scale;
             _cellSize = (new game.cell.Cell).size;
             _cellCount=ar.app.windowSize[1]/_cellSize/_scale;
-            import std.stdio;
-            "setup game".writeln;
+            
+            _tower.buildCellToCurrentCursor(CellType.Depot);
+            _tower.cursorMoveRight;
+            _tower.buildCellToCurrentCursor(CellType.House);
+            
         }
 
         ///
@@ -36,6 +40,8 @@ class Game {
 
         ///
         void draw(){
+            import std.stdio;
+            _tower.foods.writeln;
             ar.graphics.pushMatrix;
             ar.math.Vector2i cursorPos = _tower.cursorPosition;
             if(_cellCount - cursorPos[1] + _dispFloor < 2){
@@ -52,7 +58,6 @@ class Game {
 
         ///
         void keyPressed(ar.utils.KeyType key){
-            import game.cell;
             switch (key) {
                 case ar.utils.KeyType.W:
                     _tower.cursorMoveUp;
@@ -67,17 +72,29 @@ class Game {
                     _tower.cursorMoveRight;
                     break;
                 case ar.utils.KeyType.Z:
-                    _tower.buildCellToCurrentCursor(CellType.House);
+                    if(_tower.foods>0){
+                        _tower.buildCellToCurrentCursor(CellType.House);
+                        _tower.decFoods(1);
+                    }
                     break;
                 //TODO
                 case ar.utils.KeyType.X:
-                    _tower.buildCellToCurrentCursor(CellType.Factory);
+                    if(_tower.foods>0){
+                        _tower.buildCellToCurrentCursor(CellType.Factory);
+                        _tower.decFoods(1);
+                    }
                     break;
-                // case ar.utils.KeyType.C:
-                //     _tower.buildCellToCurrentCursor(CellType.Ferm);
-                //     break;
+                case ar.utils.KeyType.C:
+                    if(_tower.foods>0){
+                        _tower.buildCellToCurrentCursor(CellType.Depot);
+                        _tower.decFoods(1);
+                    }
+                    break;
                 case ar.utils.KeyType.V:
-                    _tower.buildCellToCurrentCursor(CellType.Ludder);
+                    if(_tower.foods>0){
+                        _tower.buildCellToCurrentCursor(CellType.Ludder);
+                        _tower.decFoods(1);
+                    }
                     break;
                 case ar.utils.KeyType.Enter:
                     _tower.buildCellToCurrentCursor(CellType.Broken);
@@ -99,7 +116,7 @@ class Game {
     public{
         void updateEntities(){
             import std.random;
-            if(uniform(0, 60*10)==0) spawnEnemy();
+            if(uniform(0, 60*30)==0) spawnEnemy();
             
             
             

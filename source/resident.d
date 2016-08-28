@@ -48,6 +48,13 @@ class Resident : Entity{
         
         ///
         void update(in Vector2i size){
+            if(_pos[0]%Cell.size == 0 && _pos[1]%Cell.size == 0){
+                if(_cell.type == CellType.Depot && _state == ResidentState.HasFood){
+                    _cell.foods += 1;
+                    _state = ResidentState.Free;
+                }
+            }
+            
             import std.random;
             if(_state == ResidentState.Free){
                 switch (_moving) {
@@ -75,7 +82,7 @@ class Resident : Entity{
                         break;
                     case ResidentMoving.Down:
                         if(_cell.down !=null && _cell.down.type != CellType.Ludder && _pos[1]%Cell.size == 0){
-                            if(uniform(0, 1) == 1){
+                            if(uniform(0, 2) == 1){
                                 _moving = ResidentMoving.Left;
                             }else{
                                 _moving = ResidentMoving.Right;
@@ -84,7 +91,7 @@ class Resident : Entity{
                             if(0 < _pos[1]){
                                 _pos -= Vector3i(0, 1, 0);
                             }else{
-                                if(uniform(0, 1) == 1){
+                                if(uniform(0, 2) == 1){
                                     _moving = ResidentMoving.Left;
                                 }else{
                                     _moving = ResidentMoving.Right;
@@ -97,8 +104,6 @@ class Resident : Entity{
                 }
                 
                 if(_pos[1] == 0 && _pos[0]/Cell.size == size[0]-1){
-                    import std.stdio;
-                    "hasFood!".writeln;
                     _state = ResidentState.HasFood;
                 }
             }else if(_state == ResidentState.HasFood){
@@ -127,7 +132,7 @@ class Resident : Entity{
                         break;
                     case ResidentMoving.Up:
                         if(_cell.up != null && _cell.type != CellType.Ludder && _pos[1]%Cell.size == 0){
-                            if(uniform(0, 1) == 1){
+                            if(uniform(0, 2) == 1){
                                 _moving = ResidentMoving.Left;
                             }else{
                                 _moving = ResidentMoving.Right;
@@ -136,7 +141,7 @@ class Resident : Entity{
                             if(_pos[1] < (size[1] - 1)*32){
                                 _pos += Vector3i(0, 1, 0);
                             }else{
-                                if(uniform(0, 1) == 1){
+                                if(uniform(0, 2) == 1){
                                     _moving = ResidentMoving.Left;
                                 }else{
                                     _moving = ResidentMoving.Right;

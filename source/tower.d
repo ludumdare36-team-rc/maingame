@@ -29,6 +29,7 @@ class Tower{
                 cell.update(Vector2i(n, f)*Cell.size, entities);
             }
         }
+        updateFoods;
         
         foreach (int f, floor; _cells) {
             bool isBrokenFloor = true;
@@ -159,7 +160,7 @@ class Tower{
     ///
     bool isFillFloor(in size_t f)const{
         bool isNotEmptyFloor = true;
-        foreach (ref cell; _cells[f]) {
+        foreach (ref cell; _cells[f]){
             isNotEmptyFloor = isNotEmptyFloor && cell.type != CellType.Empty;
         }
         return isNotEmptyFloor;
@@ -168,7 +169,7 @@ class Tower{
     ///
     bool isBrokenFloor(in size_t f)const{
         bool isBrokenFloor = true;
-        foreach (ref cell; _cells[f]) {
+        foreach (ref cell; _cells[f]){
             isBrokenFloor = isBrokenFloor && cell.type == CellType.Broken;
         }
         return isBrokenFloor;
@@ -179,9 +180,38 @@ class Tower{
         return Vector2i(_cells[0].length.to!int, _cells.length.to!int);
     }
     
+    ///
+    int foods()const{
+        return _foods;
+    }
+    
+    void updateFoods(){
+        import std.algorithm;
+        _foods = 0;
+        _depots = [];
+        foreach (int f, floor; _cells) {
+            foreach (int n, ref cell; floor){
+                if(cell.type == CellType.Depot){
+                    _foods += cell.foods;
+                    _depots ~= &cell;
+                }
+            }
+        }
+    }
+    
+    ///
+    void decFoods(int num){
+        import std.conv;
+        int perDec = num / (_depots.length).to!int;
+        foreach (ref depot; _depots) {
+            depot.foods-=perDec;
+        }
+    }
     private{
         Cell[][] _cells;
         Vector2i _size;
+        Cell*[] _depots;
+        int _foods = 0;
         
         Vector2i _cursorPosition = Vector2i.zero;
         

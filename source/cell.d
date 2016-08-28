@@ -11,7 +11,7 @@ enum CellType {
     Empty,
     Ludder,
     House,
-    Ferm,
+    Depot,
     Factory,
 }
 
@@ -40,6 +40,7 @@ struct Cell{
     void setup(){
         life = 10;
         _age = 0;
+        foods = 0;
         import std.random;
         _textureIndex = uniform(0, 10);
     }
@@ -66,7 +67,7 @@ struct Cell{
                         soldier.pos = Vector3i(pos[0], pos[1], 0);
                         entities ~= soldier;
                         break;
-                    case CellType.Ferm:
+                    case CellType.Depot:
                         //TODO increment remaining of foods
                         break;
                     default:
@@ -91,6 +92,9 @@ struct Cell{
                 break;
             case CellType.Factory:
                 drawFactory;
+                break;
+            case CellType.Depot:
+                drawDepot;
                 break;
             default:
                 // assert(0);
@@ -121,6 +125,8 @@ struct Cell{
     Cell* right;
     
     int life = 10;
+    
+    int foods = 0;
     
     private{
         CellType _type = CellType.Empty;
@@ -160,6 +166,11 @@ struct Cell{
         void drawFactory(){
             import game.resources;
             animations("cell_factory", 2).index(0).draw;
+        }
+        
+        void drawDepot(){
+            import game.resources;
+            animations("cell_depot", 2).index(0).draw;
         }
     }
 }
