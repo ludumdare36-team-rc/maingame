@@ -70,11 +70,11 @@ class Game {
                     _tower.buildCellToCurrentCursor(CellType.House);
                     break;
                 //TODO
-                // case ar.utils.KeyType.X:
-                //     _tower.buildCellToCurrentCursor(CellType.Ferm);
-                //     break;
+                case ar.utils.KeyType.X:
+                    _tower.buildCellToCurrentCursor(CellType.Factory);
+                    break;
                 // case ar.utils.KeyType.C:
-                //     _tower.buildCellToCurrentCursor(CellType.Factory);
+                //     _tower.buildCellToCurrentCursor(CellType.Ferm);
                 //     break;
                 case ar.utils.KeyType.V:
                     _tower.buildCellToCurrentCursor(CellType.Ludder);

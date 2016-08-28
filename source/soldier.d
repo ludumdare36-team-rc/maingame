@@ -8,6 +8,13 @@ enum SoldierType{
     Infantry, 
 }
 
+enum SoldierMoving{
+    Up,
+    Down,
+    Left,
+    Right, 
+}
+
 /++
 +/
 class Soldier : Entity{
@@ -37,10 +44,70 @@ class Soldier : Entity{
         void setup(){};
         
         ///
-        void update(in Vector2i size){}
+        void update(in Vector2i size){
+            import std.random;
+            import std.algorithm;
+            import std.array;
+            
+            attack;
+            
+            bool left = _cell.left != null && _cell.left.entities.map!(e=>e.type).find(EntityType.Enemy).array != [];
+            bool right = _cell.right != null && _cell.right.entities.map!(e=>e.type).find(EntityType.Enemy).array != [];
+            bool existEnemy = left || right;
+            switch (_moving) {
+                case SoldierMoving.Left:
+                    if(_cell.down !=null && _cell.down.type == CellType.Ludder && !existEnemy){
+                        _moving = SoldierMoving.Down;
+                    }else{
+                        if(_pos[0] < (size[0]-1)*32){
+                            _pos += Vector3i(1, 0, 0);
+                        }else{
+                            _moving = SoldierMoving.Right;
+                        }
+                    }
+                    break;
+                case SoldierMoving.Right:
+                    if(_cell.down !=null && _cell.down.type == CellType.Ludder && _pos[0]%Cell.size == 0 && !existEnemy){
+                        _moving = SoldierMoving.Down;
+                    }else{
+                        if(0 < _pos[0]){
+                            _pos -= Vector3i(1, 0, 0);
+                        }else{
+                            _moving = SoldierMoving.Left;
+                        }
+                    }
+                    break;
+                case SoldierMoving.Down:
+                    if(_cell.down !=null && _cell.down.type != CellType.Ludder && _pos[1]%Cell.size == 0){
+                        if(uniform(0, 1) == 1){
+                            _moving = SoldierMoving.Left;
+                        }else{
+                            _moving = SoldierMoving.Right;
+                        }
+                    }else{
+                        if(0 < _pos[1]){
+                            _pos -= Vector3i(0, 1, 0);
+                        }else{
+                            if(uniform(0, 1) == 1){
+                                _moving = SoldierMoving.Left;
+                            }else{
+                                _moving = SoldierMoving.Right;
+                            }
+
+                        }
+                    }
+                    break;
+                default:
+            }
+            
+        }
         
         ///
-        void draw(){};
+        void draw(){
+            import game.resources;
+            import armos.graphics;
+            animations("infantry", 1).index(0).draw;
+        };
         
         ///
         void cell(Cell* c){_cell = c;};
@@ -52,6 +119,14 @@ class Soldier : Entity{
         int _life = 10;
         Vector3i _pos;
         Cell* _cell;
-        EntityType _type = EntityType.Resident;
+        EntityType _type = EntityType.Soldier;
+        SoldierMoving _moving = SoldierMoving.Right;
+        
+        void attack(){
+            import std.random;
+            if(_cell.entities.length != 0){
+                if(_cell.entities[0].type == EntityType.Enemy) _cell.entities[0].damage = 10;
+            } 
+        }
     }//private
 }//class Soldier
