@@ -33,8 +33,22 @@ class Game {
 
         ///
         void draw(){
+            import std.stdio;
+            ar.graphics.pushMatrix;
+            ar.math.Vector2i cursorPos = _tower.cursorPosition;
+            int cellkazu=ar.app.windowSize[1]/game.cell.Cell.size/2;
+            if(cursorPos[1] >cellkazu/4){
+                if(cellkazu - cursorPos[1] + _dispFloor < 2){
+                    _dispFloor++;
+                }
+                if(cursorPos[1] - _dispFloor <2){
+                    _dispFloor--;
+                }
+            }
+            ar.graphics.translate(0, -_dispFloor * game.cell.Cell.size, 0);
             drawTower;
             drawEntities;
+            ar.graphics.popMatrix;
         }
 
         ///
@@ -116,6 +130,8 @@ class Game {
     }//private
     private{
         ar.audio.Source _heiwaBGM;
+        int _dispFloor = 0;
+        int _scale = 3;
     }
 }//class Game
 
