@@ -39,6 +39,7 @@ class Tower{
         }
     };
     
+    ///
     void draw(){
         import armos.graphics;
         pushMatrix;
@@ -60,6 +61,7 @@ class Tower{
         popMatrix;
     }
     
+    ///
     void dropFloor(in size_t n){
         foreach (floor; _cells[n+1.._cells.length]) {
             foreach (ref cell; floor) {
@@ -69,8 +71,22 @@ class Tower{
         
         deleteFloor(n);
     }
-
     
+    ///
+    void connectEntitiesWithCell(ref Entity[] entities){
+        //clear
+        foreach (int f, floor; _cells) {
+            foreach (int n, ref cell; floor) {
+                cell.entities = [];
+            }
+        }
+        
+        foreach (entity; entities) {
+            cell(Vector2i(entity.pos[0], entity.pos[1])/Cell.size).entities ~= entity;
+        }
+    }
+
+    ///
     ref Cell cell(in Vector2i position){
         return _cells[position[1]][position[0]];
     }
@@ -138,6 +154,11 @@ class Tower{
             isBrokenFloor = isBrokenFloor && cell.type == CellType.Broken;
         }
         return isBrokenFloor;
+    }
+    
+    Vector2i size()const{
+        import std.conv;
+        return Vector2i(_cells[0].length.to!int, _cells.length.to!int);
     }
     
     private{
