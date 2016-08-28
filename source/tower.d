@@ -37,6 +37,8 @@ class Tower{
             }
             if(isBrokenFloor) dropFloor(f);
         }
+        
+        if(_cells.length <= _cursorPosition[1])_cursorPosition[1]--;
     };
     
     ///
@@ -70,6 +72,7 @@ class Tower{
         }
         
         deleteFloor(n);
+        if(_cells.length == 0)addFloor;
         connectNearCells;
     }
     

@@ -27,40 +27,49 @@ struct Cell{
     
     void soldierType(in SoldierType t){
         _soldierType = t;
-        _age = 1;
+        _age = 0;
     }
     
     void type(in CellType type){
+        _type = type;
+        if(_type != CellType.Broken){
+            setup;
+        }
+    }
+    
+    void setup(){
+        life = 10;
+        _age = 0;
         import std.random;
         _textureIndex = uniform(0, 10);
-        _type = type;
     }
     
     ///
     void update(in Vector2i pos, ref Entity[] entities){
-        if(_age%(60*30) == 0){
-            import std.stdio;
-            switch (_type) {
-                case CellType.House:
-                //TODO spawn 
-                    "spawn".writeln;
-                    import game.resident;
-                    Resident resident = new Resident();
-                    resident.pos = Vector3i(pos[0], pos[1], 0);
-                    entities ~= resident;
-                    import std.stdio;
-                    entities.length.writeln;
-                    break;
-                case CellType.Factory:
-                //TODO spawn 
-                    break;
-                case CellType.Ferm:
-                //TODO increment remaining of foods
-                    break;
-                default:
+        if(life <= 0){
+            _type = CellType.Broken;
+        }else{
+            if(_age%(60*30) == 0){
+                import std.stdio;
+                switch (_type) {
+                    case CellType.House:
+                        //TODO spawn 
+                        import game.resident;
+                        Resident resident = new Resident();
+                        resident.pos = Vector3i(pos[0], pos[1], 0);
+                        entities ~= resident;
+                        break;
+                    case CellType.Factory:
+                        //TODO spawn 
+                        break;
+                    case CellType.Ferm:
+                        //TODO increment remaining of foods
+                        break;
+                    default:
+                }
             }
+
         }
-        
         _age++;
     }
     
@@ -104,12 +113,13 @@ struct Cell{
     Cell* left;
     Cell* right;
     
+    int life = 10;
+    
     private{
         CellType _type = CellType.Empty;
         SoldierType _soldierType = SoldierType.Infantry;
         int _textureIndex;
         int _isEdge = 0;
-        int _life = 0;
         ulong _age = 0;;
         
         void drawEmpty(){

@@ -21,6 +21,9 @@ enum ResidentMoving{
 class Resident : Entity{
     public{
         ///
+        EntityType type()const{return _type;};
+        
+        ///
         bool shouldDie(){return _shouldDie;};
         
         ///
@@ -28,6 +31,9 @@ class Resident : Entity{
         
         ///
         int life(){return _life;}
+        
+        ///
+        void damage(in int damage){_life-=damage;}
         
         ///
         Vector3i pos(){return _pos;}
@@ -143,6 +149,10 @@ class Resident : Entity{
                 }
             }
             
+            if(_life <= 0){
+                _shouldDie = true;
+            }
+            
             if(_age > 60*30){
                 _shouldDie = true;
             }
@@ -178,5 +188,6 @@ class Resident : Entity{
         int _life = 10;
         Vector3i _pos;
         Cell* _cell;
+        EntityType _type = EntityType.Resident;
     }//private
 }//class Resident

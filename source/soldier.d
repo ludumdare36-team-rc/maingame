@@ -13,6 +13,9 @@ enum SoldierType{
 class Soldier : Entity{
     public{
         ///
+        EntityType type()const{return _type;};
+        
+        ///
         bool shouldDie(){return _shouldDie;};
         
         ///
@@ -20,6 +23,9 @@ class Soldier : Entity{
         
         ///
         int life(){return _life;}
+        
+        ///
+        void damage(in int damage){_life-=damage;}
         
         ///
         Vector3i pos(){return _pos;}
@@ -46,5 +52,6 @@ class Soldier : Entity{
         int _life = 10;
         Vector3i _pos;
         Cell* _cell;
+        EntityType _type = EntityType.Resident;
     }//private
 }//class Soldier
