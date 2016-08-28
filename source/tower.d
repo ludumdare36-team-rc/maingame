@@ -70,6 +70,7 @@ class Tower{
         }
         
         deleteFloor(n);
+        connectNearCells;
     }
     
     ///
@@ -82,7 +83,20 @@ class Tower{
         }
         
         foreach (entity; entities) {
-            cell(Vector2i(entity.pos[0], entity.pos[1])/Cell.size).entities ~= entity;
+            Cell* currentCell = &cell(Vector2i(entity.pos[0], entity.pos[1])/Cell.size);
+            currentCell.entities ~= entity;
+            entity.cell = currentCell;
+        }
+    }
+    
+    void connectNearCells(){
+        foreach (int f, floor; _cells) {
+            foreach (int n, ref cell; floor){
+               if(f<_cells.length-1) cell.up = &_cells[f+1][n];
+               if(0<f) cell.down = &_cells[f-1][n];
+               if(n<floor.length-1) cell.right= &_cells[f][n+1];
+               if(0<n) cell.left= &_cells[f][n-1];
+            }
         }
     }
 
@@ -121,7 +135,7 @@ class Tower{
         if(cell(_cursorPosition).type != type){
             cell(_cursorPosition).type = type;
             cell(_cursorPosition).soldierType = soldierType;
-            if(isFillFloor(_size[1]-1)){
+            if(isFillFloor(_cells.length-1)){
                 addFloor;
             }
         }
@@ -136,6 +150,7 @@ class Tower{
         _cells ~= floor;
         import std.conv;
         _size[1] = _cells.length.to!int;
+        connectNearCells;
     }
     
     ///
@@ -180,7 +195,7 @@ class Tower{
             if(p[0] < 0)return;
             if(p[0] >= _size[0])return;
             if(p[1] < 0)return;
-            if(p[1] >= _size[1])return;
+            if(p[1] >= _cells.length)return;
             _cursorPosition = p;
         }
     }

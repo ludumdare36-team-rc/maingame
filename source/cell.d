@@ -9,6 +9,7 @@ import game.soldier;
 enum CellType {
     Broken,
     Empty,
+    Ludder,
     House,
     Ferm,
     Factory,
@@ -72,8 +73,11 @@ struct Cell{
             case CellType.House:
                 drawHouse;
                 break;
+            case CellType.Ludder:
+                drawLudder;
+                break;
             default:
-                assert(0);
+                // assert(0);
         }
     }
     
@@ -93,6 +97,12 @@ struct Cell{
     
     ///
     Entity[] entities;
+    
+    ///
+    Cell* up;
+    Cell* down;
+    Cell* left;
+    Cell* right;
     
     private{
         CellType _type = CellType.Empty;
@@ -116,6 +126,18 @@ struct Cell{
             }else{
                 animations("cell_house", 7).index(1).draw;
             }
+        }
+        
+        void drawLudder(){
+            import game.resources;
+            if(_isEdge == 0){
+                animations("cell_house", 7).index(2).draw;
+            }else if(_isEdge == -1){
+                animations("cell_house", 7).index(0).draw;
+            }else{
+                animations("cell_house", 7).index(1).draw;
+            }
+            animations("ludder", 1).index(0).draw;
         }
         
     }
