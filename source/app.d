@@ -20,7 +20,7 @@ class Game {
         ///
         void setup(){
             _tower = new Tower(ar.math.Vector2i(6, 1));
-            _heiwaBGM= (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).play;
+            _heiwaBGM= (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).isLooping(true).play;
             import std.stdio;
             "setup game".writeln;
         }
