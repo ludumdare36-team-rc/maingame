@@ -27,8 +27,8 @@ class Game {
 
         ///
         void update(){
-            updateTower;
             updateEntities;
+            updateTower;
         }
 
         ///
@@ -85,6 +85,11 @@ class Game {
 
     public{
         void updateEntities(){
+            import std.random;
+            if(uniform(0, 60*10)==0) spawnEnemy();
+            
+            
+            
             _tower.connectEntitiesWithCell(_entities);
             
             ar.math.Vector2i towerSize = _tower.size;
@@ -104,7 +109,6 @@ class Game {
                 entity.draw;
                 ar.graphics.popMatrix;
             }
-            // _entities.each!((e){e.draw;});
         }
         
         void updateTower(){
@@ -115,11 +119,21 @@ class Game {
             _tower.draw;
         };
         
+        
         Entity[] _entities;
         Tower _tower;
     }//private
     private{
         ar.audio.Source _heiwaBGM;
+        
+        void spawnEnemy(){
+            import game.enemy;
+            import std.random;
+            Enemy enemy = new Enemy;
+            import game.cell;
+            enemy.pos = ar.math.Vector3i((_tower.size[0]-1)*Cell.size, 0, 0);
+            _entities ~= enemy;
+        }
     }
 }//class Game
 
