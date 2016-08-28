@@ -1,4 +1,5 @@
 static import ar = armos;
+import game.resources;
 
 ///
 enum GameStatus{
@@ -96,10 +97,17 @@ class TestApp : ar.app.BaseApp{
 		ar.graphics.blendMode = ar.graphics.BlendMode.Alpha;
         _state = GameStatus.Opening;
         
+        _player = new ar.audio.Player;
+        _titleBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/title")).play;
         ar.graphics.background(146, 173, 148);
     }
 
     override void update(){
+        if(_state == GameStatus.Opening){
+            if(_titleBGM.state == ar.audio.SourceState.Stopped){
+                _titleBGM = (new ar.audio.Source).buffer(sounds("data/kuuki")).isLooping(true).play;
+            }
+        }
         if(_game){
             _game.update();
         }
@@ -151,6 +159,7 @@ class TestApp : ar.app.BaseApp{
         
         switch (_state) {
             case GameStatus.Opening:
+                _titleBGM.stop;
                 _state = GameStatus.Guide;
                 break;
             case GameStatus.Guide:
@@ -183,6 +192,8 @@ class TestApp : ar.app.BaseApp{
         GameStatus _state;
         Game _game;
         int _scale = 4;
+        ar.audio.Player _player;
+        ar.audio.Source _titleBGM;
     }
 }
 
