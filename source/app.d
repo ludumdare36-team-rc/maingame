@@ -199,26 +199,6 @@ class TestApp : ar.app.BaseApp{
         if(_game){
             _game.keyPressed(key);
         }
-    }
-
-    override void keyReleased(ar.utils.KeyType key){
-        if(_game){
-            _game.keyReleased(key);
-        }
-    }
-
-    override void mouseMoved(ar.math.Vector2i position, int button){
-        if(_game){
-            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
-            _game.mouseMoved(flipped/_scale, button);
-        }
-    }
-
-    override void mousePressed(ar.math.Vector2i position, int button){
-        if(_game){
-            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
-            _game.mousePressed(flipped/_scale, button);
-        }
         
         switch (_state) {
             case GameStatus.Opening:
@@ -241,6 +221,26 @@ class TestApp : ar.app.BaseApp{
                 break;
             default:
                 assert(0);
+        }
+    }
+
+    override void keyReleased(ar.utils.KeyType key){
+        if(_game){
+            _game.keyReleased(key);
+        }
+    }
+
+    override void mouseMoved(ar.math.Vector2i position, int button){
+        if(_game){
+            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
+            _game.mouseMoved(flipped/_scale, button);
+        }
+    }
+
+    override void mousePressed(ar.math.Vector2i position, int button){
+        if(_game){
+            auto flipped = ar.math.Vector2i(position[0],  -position[1] + ar.app.windowSize[1]);
+            _game.mousePressed(flipped/_scale, button);
         }
     }
 
