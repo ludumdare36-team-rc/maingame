@@ -30,7 +30,7 @@ class Soldier : Entity{
         void setup(){};
         
         ///
-        void update(){};
+        void update(in Vector2i size){}
         
         ///
         void draw(){};

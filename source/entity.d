@@ -9,6 +9,6 @@ interface Entity{
     int life();
     
     void setup();
-    void update();
+    void update(in Vector2i towerSize);
     void draw();
 }

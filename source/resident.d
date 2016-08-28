@@ -28,7 +28,10 @@ class Resident : Entity{
         };
         
         ///
-        void update(){
+        void update(in Vector2i size){
+            if(_pos[0] < (size[0]-1)*32){
+                _pos += Vector3i(1, 0, 0);
+            }
             if(_age > 60*30){
                 _shouldDie = true;
             }

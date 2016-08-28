@@ -81,7 +81,7 @@ struct Cell{
     void dropEntity(in int height){
         import std.algorithm;
         import armos.math;
-        foreach (entity; _entities) {
+        foreach (entity; entities) {
             entity.pos = entity.pos - Vector3i(0, height, 0);
         }
     }
@@ -91,10 +91,12 @@ struct Cell{
         _isEdge = v;
     }
     
+    ///
+    Entity[] entities;
+    
     private{
         CellType _type = CellType.Empty;
         SoldierType _soldierType = SoldierType.Infantry;
-        Entity[] _entities;
         int _textureIndex;
         int _isEdge = 0;
         int _life = 0;

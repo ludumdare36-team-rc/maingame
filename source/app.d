@@ -81,8 +81,11 @@ class Game {
 
     public{
         void updateEntities(){
+            _tower.connectEntitiesWithCell(_entities);
+            
+            ar.math.Vector2i towerSize = _tower.size;
             foreach (entity; _entities) {
-                entity.update;
+                entity.update(towerSize);
             }
             
             import std.array;
