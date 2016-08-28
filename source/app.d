@@ -21,6 +21,9 @@ class Game {
         void setup(){
             _tower = new Tower(ar.math.Vector2i(6, 1));
             _heiwaBGM= (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).isLooping(true).play;
+            _scale = (new TestApp)._scale;
+            _cellSize = (new game.cell.Cell).size;
+            _cellCount=ar.app.windowSize[1]/_cellSize/_scale;
             import std.stdio;
             "setup game".writeln;
         }
@@ -33,19 +36,15 @@ class Game {
 
         ///
         void draw(){
-            import std.stdio;
             ar.graphics.pushMatrix;
             ar.math.Vector2i cursorPos = _tower.cursorPosition;
-            int cellkazu=ar.app.windowSize[1]/game.cell.Cell.size/2;
-            if(cursorPos[1] >cellkazu/4){
-                if(cellkazu - cursorPos[1] + _dispFloor < 2){
-                    _dispFloor++;
-                }
-                if(cursorPos[1] - _dispFloor <2){
-                    _dispFloor--;
-                }
+            if(_cellCount - cursorPos[1] + _dispFloor < 2){
+                _dispFloor++;
             }
-            ar.graphics.translate(0, -_dispFloor * game.cell.Cell.size, 0);
+            if(cursorPos[1] - _dispFloor < 2 && _dispFloor >0){
+                _dispFloor--;
+            }
+            ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawTower;
             drawEntities;
             ar.graphics.popMatrix;
@@ -149,7 +148,9 @@ class Game {
             _entities ~= enemy;
         }
         int _dispFloor = 0;
-        int _scale = 3;
+        int _scale;
+        int _cellCount;
+        int _cellSize;
     }
 }//class Game
 
