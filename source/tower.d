@@ -20,11 +20,6 @@ class Tower{
         }
     }
     
-    // ///
-    // void addFloor(Floor floor){
-    //     _floors ~= floor;
-    // }
-    
     ///
     void update(){
         import std.stdio;
@@ -72,7 +67,7 @@ class Tower{
     }
 
     
-    Cell cell(in Vector2i position){
+    ref Cell cell(in Vector2i position){
         return _cells[position[1]][position[0]];
     }
     
@@ -99,6 +94,45 @@ class Tower{
     ///
     void cursorMoveDown(){
         cursorPosition = cursorPosition + Vector2i(0, -1);
+    }
+    
+    ///
+    void buildCellToCurrentCursor(in CellType type){
+        if(cell(_cursorPosition).type != type){
+            cell(_cursorPosition).type = type;
+            if(isFillFloor(_size[1]-1)){
+                addFloor;
+            }
+        }
+    }
+    
+    void addFloor(){
+        Cell[] floor = new Cell[_size[0]];
+        foreach (int index, ref cell; floor) {
+            if(index == 0) cell.isEdge = -1;
+            if(index == floor.length-1) cell.isEdge = 1;
+        }
+        _cells ~= floor;
+        import std.conv;
+        _size[1] = _cells.length.to!int;
+    }
+    
+    ///
+    bool isFillFloor(in size_t f)const{
+        bool isNotEmptyFloor = true;
+        foreach (ref cell; _cells[f]) {
+            isNotEmptyFloor = isNotEmptyFloor && cell.type != CellType.Empty;
+        }
+        return isNotEmptyFloor;
+    }
+    
+    ///
+    bool isBrokenFloor(in size_t f)const{
+        bool isBrokenFloor = true;
+        foreach (ref cell; _cells[f]) {
+            isBrokenFloor = isBrokenFloor && cell.type == CellType.Broken;
+        }
+        return isBrokenFloor;
     }
     
     private{

@@ -16,8 +16,14 @@ struct Cell{
     import game.entity;
     
     ///
-    int type()const{
+    CellType type()const{
         return _cellType;
+    }
+    
+    void type(in CellType type){
+        import std.random;
+        _textureIndex = uniform(0, 10);
+        _cellType = type;
     }
     
     ///
@@ -73,7 +79,7 @@ struct Cell{
         void drawHouse(){
             import game.resources;
             if(_isEdge == 0){
-                animations("cell_house", 7).index(2).draw;
+                animations("cell_house", 7).index(2+_textureIndex%5).draw;
             }else if(_isEdge == -1){
                 animations("cell_house", 7).index(0).draw;
             }else{
