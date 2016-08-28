@@ -1,5 +1,6 @@
 module game.entity;
 import armos.math.vector;
+import game.cell;
 
 interface Entity{
     bool shouldDie();
@@ -11,4 +12,5 @@ interface Entity{
     void setup();
     void update(in Vector2i towerSize);
     void draw();
+    void cell(Cell*);
 }

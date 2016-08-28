@@ -29,7 +29,7 @@ class Animation {
             _mesh.addTexCoord(0, 1);_mesh.addVertex(width, 0, 0);
             _mesh.addTexCoord(-1, 0);_mesh.addVertex(0, height, 0);
             _mesh.addTexCoord(-1, 1);_mesh.addVertex(width, height, 0);
-            
+
             _mesh.addIndex(0);
             _mesh.addIndex(1);
             _mesh.addIndex(2);

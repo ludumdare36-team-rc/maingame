@@ -1,6 +1,7 @@
 module game.soldier;
 
 import game.entity;
+import game.cell;
 import armos.math.vector;
 
 enum SoldierType{
@@ -35,6 +36,8 @@ class Soldier : Entity{
         ///
         void draw(){};
         
+        ///
+        void cell(Cell* c){_cell = c;};
     }//public
 
     private{
@@ -42,5 +45,6 @@ class Soldier : Entity{
         int _age = 0;
         int _life = 10;
         Vector3i _pos;
+        Cell* _cell;
     }//private
 }//class Soldier
