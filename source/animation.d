@@ -107,7 +107,9 @@ class Animation {
                 import std.stdio;
                 fileName.writeln;
                 _imageLoader.load(fileName);
-                _textures ~= _imageLoader.texture;
+                Texture tmp = _imageLoader.texture;
+                tmp.setMinMagFilter(TextureFilter.Nearest);
+                _textures ~= tmp;
             }else{
                 foreach (size_t i; _maxImages.iota.array) {
                     string fileName = animationFileName(_imageNamePrefix, i);

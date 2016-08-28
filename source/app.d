@@ -17,12 +17,14 @@ class Game {
     import game.entity;
     import game.tower;
     public{
+        ///
         void setup(){
-            _tower = new Tower(ar.math.Vector2i(5, 1));
+            _tower = new Tower(ar.math.Vector2i(6, 1));
             import std.stdio;
             "setup game".writeln;
         }
 
+        ///
         void update(){
             updateEntities;
             updateTower;
@@ -30,6 +32,7 @@ class Game {
             "update game".writeln;
         }
 
+        ///
         void draw(){
             drawEntities;
             drawTower;
@@ -37,7 +40,9 @@ class Game {
             "draw game".writeln;
         }
 
+        ///
         void keyPressed(ar.utils.KeyType key){
+            import game.cell;
             switch (key) {
                 case ar.utils.KeyType.W:
                     _tower.cursorMoveUp;
@@ -51,6 +56,16 @@ class Game {
                 case ar.utils.KeyType.D:
                     _tower.cursorMoveRight;
                     break;
+                case ar.utils.KeyType.Z:
+                    _tower.buildCellToCurrentCursor(CellType.House);
+                    break;
+                //TODO
+                // case ar.utils.KeyType.X:
+                //     _tower.buildCellToCurrentCursor(CellType.Ferm);
+                //     break;
+                // case ar.utils.KeyType.C:
+                //     _tower.buildCellToCurrentCursor(CellType.Factory);
+                //     break;
                 case ar.utils.KeyType.Enter:
                     // _tower.cursorMoveRight;
                     break;
@@ -191,7 +206,7 @@ class TestApp : ar.app.BaseApp{
     private{
         GameStatus _state;
         Game _game;
-        int _scale = 4;
+        int _scale = 3;
         ar.audio.Player _player;
         ar.audio.Source _titleBGM;
     }
