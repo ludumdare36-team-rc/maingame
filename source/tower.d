@@ -63,11 +63,15 @@ class Tower{
             popMatrix;
             translate(0, Cell.size, 0);
         }
-        popMatrix;
-        
         import game.resources;
-        pushMatrix;
-        translate(cursorPosition[0]*Cell.size, cursorPosition[1]*Cell.size, 0);
+        version(Windows){
+            int size = Cell.size * _cells.length;
+            translate(cursorPosition[0]*Cell.size, cursorPosition[1]*Cell.size-size, 0);
+        }else{
+            popMatrix;
+            pushMatrix;
+            translate(cursorPosition[0]*Cell.size, cursorPosition[1]*Cell.size, 0);
+        }
         animations("cursor", 1).index(0).draw;
         popMatrix;
     }

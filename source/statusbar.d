@@ -53,44 +53,44 @@ class StatusBar {
         
         void drawFoods(in int num){
             import std.conv;
-			_font.draw(
-				"Foods      : " ~ text(num),
-				0,0
-			);
+            _font.draw(
+                "Foods      : " ~ text(num),
+                0,0
+            );
         }
         
         void drawPopulation(in int num){
             import std.conv;
-			_font.draw(
-				"Population : " ~ text(num>=0?num:0),
-				0,0
-			);
+            _font.draw(
+                "Population : " ~ text(num>=0?num:0),
+                0,0
+            );
         }
         
         void drawWaveTime(in int num){
             if(num == 0){
-            color(255, 138, 0);
-            import std.conv;
-			_font.draw(
-				"Next wave  : Enemy Attack", 
-				0,0
-			);
-            color(255, 255, 255);
+                color(255, 138, 0);
+                import std.conv;
+                _font.draw(
+                    "Next wave  : Enemy Attack", 
+                    0,0
+                );
+                color(255, 255, 255);
             }else{
-            import std.conv;
-			_font.draw(
-				"Next wave  : " ~ text(num) ~ "s",
-				0,0
-			);
+                import std.conv;
+                _font.draw(
+                    "Next wave  : " ~ text(num),
+                    0,0
+                );
             }
         }
         
         void drawHeight(in int num){
             import std.conv;
-			_font.draw(
-				"Height     : " ~ text(num),
-				0,0
-			);
+            _font.draw(
+                "Height     : " ~ text(num),
+                0,0
+            );
         }
     }//public
 
