@@ -22,6 +22,8 @@ class Tower{
         }
         import game.resources;
         _hammer = (new armos.audio.Source).buffer(sounds("data/hammer"));
+        _click = (new armos.audio.Source).buffer(sounds("data/click"));
+        _clickBad = (new armos.audio.Source).buffer(sounds("data/bad"));
     }
     
     ///
@@ -216,6 +218,8 @@ class Tower{
         Cell*[] _depots;
         int _foods = 0;
         armos.audio.Source _hammer;
+        armos.audio.Source _click;
+        armos.audio.Source _clickBad;
         
         Vector2i _cursorPosition = Vector2i.zero;
         
@@ -233,9 +237,9 @@ class Tower{
             Vector2i before = cursorPosition;
             cursorPosition = cursorPosition +  p;
             if(cursorPosition == before){
-                (new armos.audio.Source).buffer(sounds("data/bad")).play;
+                _clickBad.play;
             }else{
-                (new armos.audio.Source).buffer(sounds("data/click")).play;
+                _click.play;
             }
         }
         
