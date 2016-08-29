@@ -32,13 +32,28 @@ class Game {
             _tower.cursorMoveRight;
             _tower.buildCellToCurrentCursor(CellType.House);
             
+            _isBattle = false;
+            _age = 0;
         }
 
         ///
         void update(){
+            
+            if(_age%(60*60) == 60*60-1){
+                if(!_isBattle){
+                    _isBattle = true;
+                    bgmChanger.swap.start;
+                }else{
+                    _isBattle = false;
+                    bgmChanger.swap.start;
+                }
+            }
+            
             updateEntities;
             updateTower;
             bgmChanger.update;
+            
+            _age++;
         }
 
         ///
@@ -62,9 +77,6 @@ class Game {
         ///
         void keyPressed(ar.utils.KeyType key){
             switch (key) {
-                case ar.utils.KeyType.J:
-                    bgmChanger.swap.start;
-                    break;
                 case ar.utils.KeyType.W:
                     _tower.cursorMoveUp;
                     break;
@@ -122,7 +134,7 @@ class Game {
     public{
         void updateEntities(){
             import std.random;
-            if(uniform(0, 60*30)==0) spawnEnemy();
+            if(_isBattle && uniform(0, 60*4)==0) spawnEnemy();
             
             
             
@@ -171,7 +183,9 @@ class Game {
             enemy.pos = ar.math.Vector3i((_tower.size[0]-1)*Cell.size, 0, 0);
             _entities ~= enemy;
         }
-        bool isBattle = false;
+        bool _isBattle = false;
+        int _age = 0;
+        int _waveRemain = 0;
         int _dispFloor = 0;
         int _scale;
         int _cellCount;
