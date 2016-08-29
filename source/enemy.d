@@ -106,6 +106,7 @@ class Enemy : Entity{
             if(_age > 60*30){
                 _shouldDie = true;
             }
+            _age++;
         };
         
         ///
@@ -113,6 +114,12 @@ class Enemy : Entity{
             import game.resources;
             import armos.graphics;
             animations("enemy", 1).index(0).draw;
+            pushMatrix;
+            import std.math;
+            translate(10f, ((_age/8)%2)+12, 0);
+            rotate(-90f, 0, 0, 1);
+            animations("sword", 1).index(0).draw;
+            popMatrix;
         };
         
         ///
