@@ -63,7 +63,6 @@ class Game {
         void draw(){
             import std.stdio;
             _tower.foods.writeln;
-            ar.graphics.pushMatrix;
             ar.math.Vector2i cursorPos = _tower.cursorPosition;
             if(_cellCount - cursorPos[1] + _dispFloor < 2){
                 _dispFloor++;
@@ -71,8 +70,10 @@ class Game {
             if(cursorPos[1] - _dispFloor < 2 && _dispFloor >0){
                 _dispFloor--;
             }
+            ar.graphics.pushMatrix;
             ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawTower;
+            ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawEntities;
             ar.graphics.popMatrix;
             import std.algorithm;
