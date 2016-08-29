@@ -269,6 +269,25 @@ class TestApp : ar.app.BaseApp{
                 break;
                 
             case GameStatus.Guide:
+                ar.graphics.pushMatrix;
+                    ar.graphics.scale(1f, -1f, 1f);
+                    auto font = new ar.graphics.BitmapFont;
+                    font.load("font.png", 8, 8);
+                    font.draw(
+                            "Let's make the highest \ntower in the space. \nNo warehouse is \ngame over.\nEnemies try \nto break warehouse. \nTo save food,\nmake the house and weapon. \nThen,Pop can go to space!
+
+Move           : Cursor Keys
+Build House    : Z
+Build Weapon   : X
+Build Warehouse: C
+Build Ladder   : V
+
+
+
+PRESS ANY KEY !",
+                            32, -ar.app.windowSize[1]/_scale+32
+                            );
+                ar.graphics.popMatrix;
                 break;
                 
             case GameStatus.Playing:
