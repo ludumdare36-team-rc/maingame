@@ -144,7 +144,26 @@ class Tower{
     
     ///
     void buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
-        if(_foods > 0){
+        auto currentType = cell(_cursorPosition).type;
+        auto nextType = type;
+        bool isTransitable = true;
+        switch (currentType) {
+            case CellType.Ludder:
+                isTransitable = false;
+                break;
+            case CellType.House:
+                if(nextType != CellType.Ludder) isTransitable = false;
+                break;
+            case CellType.Factory:
+                if(nextType != CellType.Ludder) isTransitable = false;
+                break;
+            case CellType.Depot:
+                if(nextType != CellType.Ludder) isTransitable = false;
+                break;
+            default:
+        }
+            
+        if(_foods > 0 && isTransitable){
             _buildCellToCurrentCursor(type, soldierType);
             _hammer.play;
             decFoods(1);
