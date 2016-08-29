@@ -20,7 +20,7 @@ class Tower{
             }
             _cells ~= floor;
         }
-        _buildCellToCurrentCursor(CellType.Depot
+        _buildCellToCurrentCursor(CellType.Depot);
         cursorPosition(Vector2i(1,0));
         _buildCellToCurrentCursor(CellType.House);
         import game.resources;
