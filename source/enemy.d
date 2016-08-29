@@ -120,6 +120,11 @@ class Enemy : Entity{
             rotate(-90f, 0, 0, 1);
             animations("sword", 1).index(0).draw;
             popMatrix;
+            
+            pushMatrix;
+            translate(0f, 18f, 0f);
+            animations("hp_bar", 10).index(life<=0?0:life-1).draw;
+            popMatrix;
         };
         
         ///

@@ -205,6 +205,7 @@ class TestApp : ar.app.BaseApp{
     override void setup(){
         ar.app.windowTitle = "The Babel";
         ar.graphics.blendMode = ar.graphics.BlendMode.Alpha;
+        ar.graphics.lineWidth = 3;
         _state = GameStatus.Opening;
         
         _player = new ar.audio.Player;
