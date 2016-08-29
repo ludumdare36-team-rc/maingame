@@ -144,6 +144,11 @@ class Game {
         bool isGameover(){
             return !_tower.isExistAnyDepots;
         }
+        
+        void bgmStop(){
+            _heiwaBGM.stop;
+            _sentouBGM.stop;
+        }
     }//public
 
     public{
@@ -220,6 +225,7 @@ class TestApp : ar.app.BaseApp{
         
         _player = new ar.audio.Player;
         _titleBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/title")).play;
+        _gameoverBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/gameover"));
         ar.graphics.background(146, 173, 148);
     }
 
@@ -237,6 +243,8 @@ class TestApp : ar.app.BaseApp{
             case GameStatus.Playing:
                 if(_game.isGameover){
                     _state = GameStatus.Gameover;
+                    _game.bgmStop;
+                    _gameoverBGM.play;
                 }
                 _game.update();
                 break;
@@ -334,6 +342,7 @@ class TestApp : ar.app.BaseApp{
             case GameStatus.PreGameover:
                 break;
             case GameStatus.Gameover:
+                _titleBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/title")).play;
                 _state = GameStatus.Opening;
                 break;
             default:
@@ -374,6 +383,7 @@ class TestApp : ar.app.BaseApp{
         int _scale = 3;
         ar.audio.Player _player;
         ar.audio.Source _titleBGM;
+        ar.audio.Source _gameoverBGM;
     }
 }
 
