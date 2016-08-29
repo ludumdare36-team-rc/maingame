@@ -189,13 +189,13 @@ class Tower{
     }
     
     ///
-    int foods()const{
+    float foods()const{
         return _foods;
     }
     
     void updateFoods(){
         import std.algorithm;
-        _foods = 0;
+        _foods = 0f;
         _depots = [];
         foreach (int f, floor; _cells) {
             foreach (int n, ref cell; floor){
@@ -210,7 +210,7 @@ class Tower{
     ///
     void decFoods(int num){
         import std.conv;
-        int perDec = num / (_depots.length).to!int;
+        float perDec = num / (_depots.length).to!float;
         foreach (ref depot; _depots) {
             depot.foods-=perDec;
         }
@@ -219,7 +219,7 @@ class Tower{
         Cell[][] _cells;
         Vector2i _size;
         Cell*[] _depots;
-        int _foods = 0;
+        float _foods = 0f;
         armos.audio.Source _hammer;
         armos.audio.Source _hammerBad;
         armos.audio.Source _click;

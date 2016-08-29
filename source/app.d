@@ -80,7 +80,7 @@ class Game {
             import std.conv;
             
             int nextWave = !_isBattle?60 - _age%(60*60)/60:0;
-            _statusBar.draw(_tower.foods,
+            _statusBar.draw(_tower.foods.to!int,
                             _entities.map!(e => e.type).filter!(t => t != EntityType.Enemy).array.length.to!int,
                             nextWave, 
                             _tower.size[1]);

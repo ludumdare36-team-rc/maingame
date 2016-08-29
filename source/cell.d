@@ -126,7 +126,7 @@ struct Cell{
     
     int life = 10;
     
-    int foods = 0;
+    float foods = 0;
     
     private{
         CellType _type = CellType.Empty;
