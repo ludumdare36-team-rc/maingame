@@ -69,7 +69,9 @@ class Game {
             ar.graphics.pushMatrix;
             ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawTower;
-            ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
+            version(Windows){
+                ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
+            }
             drawEntities;
             ar.graphics.popMatrix;
             import std.algorithm;
