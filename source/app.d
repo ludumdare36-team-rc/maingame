@@ -127,7 +127,11 @@ class Game {
         void mouseReleased(ar.math.Vector2i position, int button){}
         
         bool isGameover(){
-            return !_tower.isExistAnyDepots;
+            import std.algorithm;
+            import std.array;
+            import std.conv;
+            int population = _entities.map!(e => e.type).filter!(t => t != EntityType.Enemy).array.length.to!int;
+            return !_tower.isExistAnyDepots || (population == 0 && _tower.foods.to!int == 0);
         }
         
         void bgmStop(){
@@ -227,12 +231,12 @@ class TestApp : ar.app.BaseApp{
                 break;
                 
             case GameStatus.Playing:
+                _game.update();
                 if(_game.isGameover){
                     _state = GameStatus.Gameover;
                     _game.bgmStop;
                     _gameoverBGM.play;
                 }
-                _game.update();
                 break;
                 
             case GameStatus.Gameover:
