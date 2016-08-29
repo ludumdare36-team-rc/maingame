@@ -172,9 +172,11 @@ class Resident : Entity{
                     animations("resident", 1).index(0).draw;
                     break;
                 case ResidentState.HasFood:
-                    color(255, 127, 127);
                     animations("resident", 1).index(0).draw;
-                    color(255, 255, 255);
+                    pushMatrix;
+                    translate(0, 14, 0);
+                    animations("food", 1).index(0).draw;
+                    popMatrix;
                     break;
                 default:
                     assert(0);

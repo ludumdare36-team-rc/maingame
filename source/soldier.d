@@ -100,6 +100,7 @@ class Soldier : Entity{
                 default:
             }
             
+            _age++;
         }
         
         ///
@@ -107,6 +108,12 @@ class Soldier : Entity{
             import game.resources;
             import armos.graphics;
             animations("infantry", 1).index(0).draw;
+            pushMatrix;
+            import std.math;
+            translate(10f, ((_age/8)%2)+12, 0);
+            rotate(-90f, 0, 0, 1);
+            animations("sword", 1).index(0).draw;
+            popMatrix;
         };
         
         ///
