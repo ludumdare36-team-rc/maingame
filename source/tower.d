@@ -20,6 +20,8 @@ class Tower{
             }
             _cells ~= floor;
         }
+        import game.resources;
+        _hammer = (new armos.audio.Source).buffer(sounds("data/hammer"));
     }
     
     ///
@@ -142,6 +144,7 @@ class Tower{
             if(isFillFloor(_cells.length-1)){
                 addFloor;
             }
+            _hammer.play;
         }
     }
     
@@ -212,6 +215,7 @@ class Tower{
         Vector2i _size;
         Cell*[] _depots;
         int _foods = 0;
+        armos.audio.Source _hammer;
         
         Vector2i _cursorPosition = Vector2i.zero;
         
