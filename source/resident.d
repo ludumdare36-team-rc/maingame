@@ -59,7 +59,7 @@ class Resident : Entity{
             if(_state == ResidentState.Free){
                 switch (_moving) {
                     case ResidentMoving.Left:
-                        if(_cell.down !=null && _cell.down.type == CellType.Ludder){
+                        if(_cell.down !=null && _cell.down.type == CellType.Ludder && uniform(0, 2) == 0){
                             _moving = ResidentMoving.Down;
                         }else{
                             if(_pos[0] < (size[0]-1)*32){
@@ -70,7 +70,7 @@ class Resident : Entity{
                         }
                         break;
                     case ResidentMoving.Right:
-                        if(_cell.down !=null && _cell.down.type == CellType.Ludder && _pos[0]%Cell.size == 0){
+                        if(_cell.down !=null && _cell.down.type == CellType.Ludder && _pos[0]%Cell.size == 0 && uniform(0, 2) == 0){
                             _moving = ResidentMoving.Down;
                         }else{
                             if(0 < _pos[0]){
@@ -109,7 +109,7 @@ class Resident : Entity{
             }else if(_state == ResidentState.HasFood){
                 switch (_moving) {
                     case ResidentMoving.Left:
-                        if(_cell.up!=null && _cell.type == CellType.Ludder){
+                        if(_cell.up!=null && _cell.type == CellType.Ludder && uniform(0, 2) == 0){
                             _moving = ResidentMoving.Up;
                         }else{
                             if(_pos[0] < (size[0]-1)*32){
@@ -120,7 +120,7 @@ class Resident : Entity{
                         }
                         break;
                     case ResidentMoving.Right:
-                        if(_cell.up!=null && _cell.type == CellType.Ludder && _pos[0]%Cell.size == 0){
+                        if(_cell.up!=null && _cell.type == CellType.Ludder && _pos[0]%Cell.size == 0 && uniform(0, 2) == 0){
                             _moving = ResidentMoving.Up;
                         }else{
                             if(0 < _pos[0]){
