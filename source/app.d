@@ -226,7 +226,27 @@ class TestApp : ar.app.BaseApp{
         if(_game){
             _game.draw();
         }
-        if(_state == GameStatus.Opening){}
+        if(_state == GameStatus.Opening){
+            auto titleImage = animations("title", 1).index(0);
+            ar.graphics.pushMatrix;
+                ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
+                ar.graphics.pushMatrix;
+                    ar.graphics.translate(-128, 32, 0);
+                    titleImage.draw;
+                    
+                ar.graphics.popMatrix;
+            ar.graphics.popMatrix;
+            
+            ar.graphics.pushMatrix;
+            ar.graphics.scale(1f, -1f, 1f);
+            auto font = new ar.graphics.BitmapFont;
+            font.load("font.png", 8, 8);
+			font.draw(
+				"PRESS ANY KEY !",
+				64+16,-128
+			);
+            ar.graphics.popMatrix;
+        }
         if(_state == GameStatus.Guide){}
         if(_state == GameStatus.Playing){}
         if(_state == GameStatus.PreGameover){}
