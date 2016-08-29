@@ -24,7 +24,7 @@ class Game {
             _tower = new Tower(ar.math.Vector2i(6, 1));
             _heiwaBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).isLooping(true).play;
             _sentouBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/sentou")).isLooping(true);
-            bgmChanger.set(_sentouBGM,_heiwaBGM);
+            _bgmChanger.set(_sentouBGM,_heiwaBGM);
             _scale = (new TestApp)._scale;
             _cellSize = (new game.cell.Cell).size;
             _cellCount=ar.app.windowSize[1]/_cellSize/_scale;
@@ -45,16 +45,16 @@ class Game {
             if(_age%(60*60) == 60*60-1){
                 if(!_isBattle){
                     _isBattle = true;
-                    bgmChanger.swap.start;
+                    _bgmChanger.swap.start;
                 }else{
                     _isBattle = false;
-                    bgmChanger.swap.start;
+                    _bgmChanger.swap.start;
                 }
             }
             
             updateEntities;
             updateTower;
-            bgmChanger.update;
+            _bgmChanger.update;
             
             _age++;
         }
@@ -128,7 +128,6 @@ class Game {
                     break;
                 case ar.utils.KeyType.Enter:
                     _tower.buildCellToCurrentCursor(CellType.Broken);
-                    // _tower.cursorMoveRight;
                     break;
                 default:
             }
@@ -141,6 +140,10 @@ class Game {
         void mousePressed(ar.math.Vector2i position, int button){}
 
         void mouseReleased(ar.math.Vector2i position, int button){}
+        
+        bool isGameover(){
+            return !_tower.isExistAnyDepots;
+        }
     }//public
 
     public{
@@ -187,7 +190,7 @@ class Game {
         ar.audio.Source _heiwaBGM;
         ar.audio.Source _sentouBGM;
         StatusBar _statusBar;
-        game.bgm.CrossFade bgmChanger = new game.bgm.CrossFade();
+        game.bgm.CrossFade _bgmChanger = new game.bgm.CrossFade();
         void spawnEnemy(){
             import game.enemy;
             import std.random;
@@ -221,13 +224,27 @@ class TestApp : ar.app.BaseApp{
     }
 
     override void update(){
-        if(_state == GameStatus.Opening){
-            if(_titleBGM.state == ar.audio.SourceState.Stopped){
-                _titleBGM = (new ar.audio.Source).buffer(sounds("data/kuuki")).isLooping(true).play;
-            }
-        }
-        if(_game){
-            _game.update();
+        switch (_state) {
+            case GameStatus.Opening:
+                if(_titleBGM.state == ar.audio.SourceState.Stopped){
+                    _titleBGM = (new ar.audio.Source).buffer(sounds("data/kuuki")).isLooping(true).play;
+                }
+                break;
+                
+            case GameStatus.Guide:
+                break;
+                
+            case GameStatus.Playing:
+                if(_game.isGameover){
+                    _state = GameStatus.Gameover;
+                }
+                _game.update();
+                break;
+                
+            case GameStatus.Gameover:
+                break;
+            default:
+                assert(0);
         }
     }
 
@@ -237,34 +254,61 @@ class TestApp : ar.app.BaseApp{
         ar.graphics.scale(_scale);
         ar.graphics.scale(1f, -1f, 1f);
         
-        if(_game){
-            _game.draw();
-        }
-        if(_state == GameStatus.Opening){
-            auto titleImage = animations("title", 1).index(0);
-            ar.graphics.pushMatrix;
-                ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
+        switch (_state) {
+            case GameStatus.Opening:
+                auto titleImage = animations("title", 1).index(0);
                 ar.graphics.pushMatrix;
-                    ar.graphics.translate(-128, 32, 0);
-                    titleImage.draw;
-                    
+                    ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
+                    ar.graphics.pushMatrix;
+                        ar.graphics.translate(-128, 32, 0);
+                        titleImage.draw;
+                    ar.graphics.popMatrix;
                 ar.graphics.popMatrix;
-            ar.graphics.popMatrix;
-            
-            ar.graphics.pushMatrix;
-            ar.graphics.scale(1f, -1f, 1f);
-            auto font = new ar.graphics.BitmapFont;
-            font.load("font.png", 8, 8);
-			font.draw(
-				"PRESS ANY KEY !",
-				64+16,-128
-			);
-            ar.graphics.popMatrix;
+
+                ar.graphics.pushMatrix;
+                    ar.graphics.scale(1f, -1f, 1f);
+                    auto font = new ar.graphics.BitmapFont;
+                    font.load("font.png", 8, 8);
+                    font.draw(
+                            "PRESS ANY KEY !",
+                            64+16,-128
+                            );
+                ar.graphics.popMatrix;
+                break;
+                
+            case GameStatus.Guide:
+                break;
+                
+            case GameStatus.Playing:
+                _game.draw();
+                break;
+                
+            case GameStatus.Gameover:
+                auto gameoverImage = animations("gameover", 1).index(0);
+                ar.graphics.pushMatrix;
+                    ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
+                    ar.graphics.pushMatrix;
+                        ar.graphics.translate(-64, 64, 0);
+                        gameoverImage.draw;
+                    ar.graphics.popMatrix;
+                    
+                    ar.graphics.pushMatrix;
+                        ar.graphics.scale(1f, -1f, 1f);
+                        auto font = new ar.graphics.BitmapFont;
+                        font.load("font.png", 8, 8);
+                        font.draw(
+                                "GAMEOVER",
+                                -32,-128-64
+                                );
+                    ar.graphics.popMatrix;
+                ar.graphics.popMatrix;
+                
+                
+                break;
+                
+            default:
+                assert(0);
         }
-        if(_state == GameStatus.Guide){}
-        if(_state == GameStatus.Playing){}
-        if(_state == GameStatus.PreGameover){}
-        if(_state == GameStatus.Gameover){}
         ar.graphics.popMatrix;
     }
 
