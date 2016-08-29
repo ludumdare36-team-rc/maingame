@@ -20,7 +20,7 @@ class Tower{
             }
             _cells ~= floor;
         }
-        _buildCellToCurrentCursor(CellType.Depot
+        _buildCellToCurrentCursor(CellType.Depot);
         cursorPosition(Vector2i(1,0));
         _buildCellToCurrentCursor(CellType.House);
         import game.resources;
@@ -144,7 +144,7 @@ class Tower{
     
     ///
     void buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
-        if(_foods > 0){
+        if(cell(_cursorPosition).type != type && _foods > 0){
             _buildCellToCurrentCursor(type, soldierType);
             _hammer.play;
             decFoods(1);
@@ -277,12 +277,10 @@ class Tower{
         
         //
         void _buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
-            if(cell(_cursorPosition).type != type){
-                cell(_cursorPosition).type = type;
-                cell(_cursorPosition).soldierType = soldierType;
-                if(isFillFloor(_cells.length-1)){
-                    addFloor;
-                }
+            cell(_cursorPosition).type = type;
+            cell(_cursorPosition).soldierType = soldierType;
+            if(isFillFloor(_cells.length-1)){
+                addFloor;
             }
         }
     }
