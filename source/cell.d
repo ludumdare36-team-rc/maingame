@@ -50,7 +50,7 @@ struct Cell{
         if(life <= 0){
             _type = CellType.Broken;
         }else{
-            if(_age%(60*30) == 0){
+            if(_age == 0){
                 import std.stdio;
                 switch (_type) {
                     case CellType.House:
