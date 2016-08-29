@@ -296,12 +296,10 @@ class Tower{
         
         //
         void _buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
-            if(cell(_cursorPosition).type != type){
-                cell(_cursorPosition).type = type;
-                cell(_cursorPosition).soldierType = soldierType;
-                if(isFillFloor(_cells.length-1)){
-                    addFloor;
-                }
+            cell(_cursorPosition).type = type;
+            cell(_cursorPosition).soldierType = soldierType;
+            if(isFillFloor(_cells.length-1)){
+                addFloor;
             }
         }
     }
