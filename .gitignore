@@ -5,4 +5,5 @@ dub.selections.json
 *.obj
 *.ase
 ludumdare36-maingame
+the_babel
 __test__library__
