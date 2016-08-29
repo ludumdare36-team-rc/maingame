@@ -79,7 +79,7 @@ class Soldier : Entity{
                     break;
                 case SoldierMoving.Down:
                     if(_cell.down !=null && _cell.down.type != CellType.Ludder && _pos[1]%Cell.size == 0){
-                        if(uniform(0, 1) == 1){
+                        if(uniform(0, 2) == 1){
                             _moving = SoldierMoving.Left;
                         }else{
                             _moving = SoldierMoving.Right;
@@ -88,7 +88,7 @@ class Soldier : Entity{
                         if(0 < _pos[1]){
                             _pos -= Vector3i(0, 1, 0);
                         }else{
-                            if(uniform(0, 1) == 1){
+                            if(uniform(0, 2) == 1){
                                 _moving = SoldierMoving.Left;
                             }else{
                                 _moving = SoldierMoving.Right;
