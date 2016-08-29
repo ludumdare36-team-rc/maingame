@@ -21,7 +21,9 @@ class Game {
         ///
         void setup(){
             _tower = new Tower(ar.math.Vector2i(6, 1));
-            _heiwaBGM= (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).isLooping(true).play;
+            _heiwaBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/heiwa")).isLooping(true).play;
+            _sentouBGM = (new ar.audio.Source).gain(0.5f).buffer(sounds("data/sentou")).isLooping(true);
+            bgmChanger.set(_sentouBGM,_heiwaBGM);
             _scale = (new TestApp)._scale;
             _cellSize = (new game.cell.Cell).size;
             _cellCount=ar.app.windowSize[1]/_cellSize/_scale;
@@ -36,6 +38,7 @@ class Game {
         void update(){
             updateEntities;
             updateTower;
+            bgmChanger.update;
         }
 
         ///
@@ -59,6 +62,9 @@ class Game {
         ///
         void keyPressed(ar.utils.KeyType key){
             switch (key) {
+                case ar.utils.KeyType.J:
+                    bgmChanger.swap.start;
+                    break;
                 case ar.utils.KeyType.W:
                     _tower.cursorMoveUp;
                     break;
@@ -155,7 +161,8 @@ class Game {
     }//private
     private{
         ar.audio.Source _heiwaBGM;
-        
+        ar.audio.Source _sentouBGM;
+        game.bgm.CrossFade bgmChanger = new game.bgm.CrossFade();
         void spawnEnemy(){
             import game.enemy;
             import std.random;
@@ -164,6 +171,7 @@ class Game {
             enemy.pos = ar.math.Vector3i((_tower.size[0]-1)*Cell.size, 0, 0);
             _entities ~= enemy;
         }
+        bool isBattle = false;
         int _dispFloor = 0;
         int _scale;
         int _cellCount;
