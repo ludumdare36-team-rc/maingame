@@ -1,6 +1,8 @@
 module game.statusbar;
 import armos.graphics.bitmapfont;
 import armos.graphics.renderer;
+import armos.graphics.primitives;
+import armos.graphics.mesh;
 
 /++
 +/
@@ -9,15 +11,21 @@ class StatusBar {
         this(){
             _font = new BitmapFont;   
             _font.load("font.png", 8, 8);
+            import armos.math;
+            _rect = planePrimitive(Vector3f(0, 0, 0), Vector2f(1500, 32*2));
         }
         
         // void update(){}
         
         void draw(in int foodsRemaining, in int population, in int wave, in int currentHeight){
+            
             import armos.app.basewindow;
             version(Posix){
                 pushMatrix;
                 translate(0, windowSize[1]/3, 0);
+                color(0, 0, 0, 128);
+                _rect.drawFill;
+                color(255, 255, 255, 255);
                 scale(1f, -1f, 1f);
                 drawFoods(foodsRemaining);
                 translate(0, 8, 0);
@@ -29,6 +37,12 @@ class StatusBar {
                 popMatrix;
             }
             version(Windows){
+                pushMatrix;
+                color(0, 0, 0, 128);
+                _rect.drawFill;
+                color(255, 255, 255, 255);
+                popMatrix;
+                
                 pushMatrix;
                     scale(3);
                     drawFoods(foodsRemaining);
@@ -96,6 +110,9 @@ class StatusBar {
 
     private{
         BitmapFont _font;
+        
+        Mesh _rect;
+        
         
         //food
         //polu
