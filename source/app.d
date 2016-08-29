@@ -113,8 +113,12 @@ class Game {
                 case ar.utils.KeyType.V:
                     _tower.buildCellToCurrentCursor(CellType.Ludder);
                     break;
+                //debug
                 case ar.utils.KeyType.Enter:
                     _tower.buildCellToCurrentCursor(CellType.Broken);
+                    break;
+                case ar.utils.KeyType.H:
+                    _isBattle = true;
                     break;
                 default:
             }

@@ -100,6 +100,13 @@ class Soldier : Entity{
                 default:
             }
             
+            if(_life <= 0){
+                _shouldDie = true;
+            }
+            
+            if(_age > 60*60){
+                _shouldDie = true;
+            }
             _age++;
         }
         
@@ -131,9 +138,14 @@ class Soldier : Entity{
         
         void attack(){
             import std.random;
-            if(_cell.entities.length != 0){
-                if(_cell.entities[0].type == EntityType.Enemy) _cell.entities[0].damage = 10;
-            } 
+            import std.stdio;
+            import std.conv;
+            import std.algorithm;
+            import std.array;
+            text("enemy:", _cell.entities.filter!(e=>e.type==EntityType.Enemy).array.length).writeln;
+            foreach (enemy; _cell.entities.filter!(e=>e.type==EntityType.Enemy).array) {
+                if(uniform(0, 15)==1)enemy.damage = 1;
+            }
         }
     }//private
 }//class Soldier
