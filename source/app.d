@@ -29,10 +29,6 @@ class Game {
             _cellSize = (new game.cell.Cell).size;
             _cellCount=ar.app.windowSize[1]/_cellSize/_scale;
             
-            _tower.buildCellToCurrentCursor(CellType.Depot);
-            _tower.cursorMoveRight;
-            _tower.buildCellToCurrentCursor(CellType.House);
-            
             _isBattle = false;
             _age = 0;
             
@@ -102,29 +98,17 @@ class Game {
                     _tower.cursorMoveRight;
                     break;
                 case ar.utils.KeyType.Z:
-                    if(_tower.foods>0){
-                        _tower.buildCellToCurrentCursor(CellType.House);
-                        _tower.decFoods(1);
-                    }
+                    _tower.buildCellToCurrentCursor(CellType.House);
                     break;
                 //TODO
                 case ar.utils.KeyType.X:
-                    if(_tower.foods>0){
-                        _tower.buildCellToCurrentCursor(CellType.Factory);
-                        _tower.decFoods(1);
-                    }
+                    _tower.buildCellToCurrentCursor(CellType.Factory);
                     break;
                 case ar.utils.KeyType.C:
-                    if(_tower.foods>0){
-                        _tower.buildCellToCurrentCursor(CellType.Depot);
-                        _tower.decFoods(1);
-                    }
+                    _tower.buildCellToCurrentCursor(CellType.Depot);
                     break;
                 case ar.utils.KeyType.V:
-                    if(_tower.foods>0){
-                        _tower.buildCellToCurrentCursor(CellType.Ludder);
-                        _tower.decFoods(1);
-                    }
+                    _tower.buildCellToCurrentCursor(CellType.Ludder);
                     break;
                 case ar.utils.KeyType.Enter:
                     _tower.buildCellToCurrentCursor(CellType.Broken);

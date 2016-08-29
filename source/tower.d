@@ -20,6 +20,9 @@ class Tower{
             }
             _cells ~= floor;
         }
+        _buildCellToCurrentCursor(CellType.Depot
+        cursorPosition(Vector2i(1,0));
+        _buildCellToCurrentCursor(CellType.House);
         import game.resources;
         _hammer = (new armos.audio.Source).buffer(sounds("data/hammer"));
         _hammerBad = (new armos.audio.Source).buffer(sounds("data/cell_denied"));
@@ -141,13 +144,10 @@ class Tower{
     
     ///
     void buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
-        if(cell(_cursorPosition).type != type){
-            cell(_cursorPosition).type = type;
-            cell(_cursorPosition).soldierType = soldierType;
-            if(isFillFloor(_cells.length-1)){
-                addFloor;
-            }
+        if(_foods > 0){
+            _buildCellToCurrentCursor(type, soldierType);
             _hammer.play;
+            decFoods(1);
             return;
         }
         _hammerBad.play;
@@ -273,6 +273,17 @@ class Tower{
             if(p[1] < 0)return;
             if(p[1] >= _cells.length)return;
             _cursorPosition = p;
+        }
+        
+        //
+        void _buildCellToCurrentCursor(in CellType type, in SoldierType soldierType = SoldierType.Infantry){
+            if(cell(_cursorPosition).type != type){
+                cell(_cursorPosition).type = type;
+                cell(_cursorPosition).soldierType = soldierType;
+                if(isFillFloor(_cells.length-1)){
+                    addFloor;
+                }
+            }
         }
     }
 }
