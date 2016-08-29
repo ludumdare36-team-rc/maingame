@@ -255,6 +255,7 @@ class Tower{
         float perDec = num / (_depots.length).to!float;
         foreach (ref depot; _depots) {
             depot.foods-=perDec;
+            if(depot.foods<0)depot.foods=0f;
         }
     }
     private{
