@@ -17,6 +17,7 @@ class Game {
     import game.entity;
     import game.tower;
     import game.cell;
+    import game.statusbar;
     public{
         ///
         void setup(){
@@ -34,6 +35,8 @@ class Game {
             
             _isBattle = false;
             _age = 0;
+            
+            _statusBar = new StatusBar;
         }
 
         ///
@@ -72,6 +75,15 @@ class Game {
             drawTower;
             drawEntities;
             ar.graphics.popMatrix;
+            import std.algorithm;
+            import std.array;
+            import std.conv;
+            
+            int nextWave = !_isBattle?60 - _age%(60*60)/60:0;
+            _statusBar.draw(_tower.foods,
+                            _entities.map!(e => e.type).filter!(t => t != EntityType.Enemy).array.length.to!int,
+                            nextWave, 
+                            _tower.size[1]);
         }
 
         ///
@@ -174,6 +186,7 @@ class Game {
     private{
         ar.audio.Source _heiwaBGM;
         ar.audio.Source _sentouBGM;
+        StatusBar _statusBar;
         game.bgm.CrossFade bgmChanger = new game.bgm.CrossFade();
         void spawnEnemy(){
             import game.enemy;
