@@ -26,7 +26,12 @@ class Enemy : Entity{
         int life(){return _life;}
         
         ///
-        void damage(in int damage){_life-=damage;}
+        void damage(in int damage){_life-=damage;
+            import std.stdio;
+            "damaged".writeln;
+            import std.conv;
+            text("life", _life).writeln;
+        }
         
         ///
         Vector3i pos(){return _pos;}
@@ -103,7 +108,7 @@ class Enemy : Entity{
                 _shouldDie = true;
             }
             
-            if(_age > 60*30){
+            if(_age > 60*10){
                 _shouldDie = true;
             }
             _age++;
@@ -143,13 +148,17 @@ class Enemy : Entity{
         void attack(){
             import std.random;
             _cell.life--;
-            if(uniform(0, 5) == 0){
-                _life--;
-            }
+            // if(uniform(0, 5) == 0){
+            //     _life--;
+            // }
             
-            if(_cell.entities.length != 0){
-                if(_cell.entities[0].type!=EntityType.Enemy) _cell.entities[0].damage = 10;
-            } 
+            
+            import std.algorithm;
+            import std.array;
+            foreach (entity; _cell.entities.filter!(e=>e.type!=EntityType.Enemy).array) {
+                // if(uniform(0, 20)==1)
+                entity.damage = 4;
+            }
         }
     }//private
 }//class Enemy

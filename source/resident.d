@@ -150,6 +150,17 @@ class Resident : Entity{
                             }
                         }
                         break;
+                    case ResidentMoving.Down:
+                        if(uniform(0, 2) == 1){
+                        _moving = ResidentMoving.Up;
+                        }else{
+                                if(uniform(0, 2) == 1){
+                                    _moving = ResidentMoving.Left;
+                                }else{
+                                    _moving = ResidentMoving.Right;
+                                }
+                        }
+                        break;
                     default:
                 }
             }
