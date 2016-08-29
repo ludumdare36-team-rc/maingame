@@ -77,16 +77,16 @@ class Game {
         ///
         void keyPressed(ar.utils.KeyType key){
             switch (key) {
-                case ar.utils.KeyType.W:
+                case ar.utils.KeyType.Up:
                     _tower.cursorMoveUp;
                     break;
-                case ar.utils.KeyType.S:
+                case ar.utils.KeyType.Down:
                     _tower.cursorMoveDown;
                     break;
-                case ar.utils.KeyType.A:
+                case ar.utils.KeyType.Left:
                     _tower.cursorMoveLeft;
                     break;
-                case ar.utils.KeyType.D:
+                case ar.utils.KeyType.Right:
                     _tower.cursorMoveRight;
                     break;
                 case ar.utils.KeyType.Z:
