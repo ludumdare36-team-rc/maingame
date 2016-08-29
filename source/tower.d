@@ -183,6 +183,15 @@ class Tower{
         return isBrokenFloor;
     }
     
+    ///
+    bool isAnyDepotFloor(in size_t f)const{
+        bool isDepotFloor = false;
+        foreach (ref cell; _cells[f]){
+            isDepotFloor = isDepotFloor || cell.type == CellType.Depot;
+        }
+        return isDepotFloor;
+    }
+    
     Vector2i size()const{
         import std.conv;
         return Vector2i(_cells[0].length.to!int, _cells.length.to!int);
@@ -205,6 +214,16 @@ class Tower{
                 }
             }
         }
+    }
+    
+    bool isExistAnyDepots()const{
+        bool ret = false;
+        import std.range;
+        import std.array;
+        foreach (i; _cells.length.iota.array) {
+            ret = ret || isAnyDepotFloor(i);
+        }
+        return ret;
     }
     
     ///
