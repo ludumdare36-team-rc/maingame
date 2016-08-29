@@ -42,7 +42,7 @@ class StatusBar {
             pushMatrix;
             import std.conv;
 			_font.draw(
-				"Population : " ~ text(num),
+				"Population : " ~ text(num>=0?num:0),
 				0,0
 			);
             popMatrix;
