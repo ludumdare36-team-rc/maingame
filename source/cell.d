@@ -80,6 +80,9 @@ struct Cell{
     
     ///
     void draw(){
+        import armos.graphics.renderer;
+        import std.conv;
+        color(127 + (life.to!float/10f)*128);
         switch (_type) {
             case CellType.Empty:
                 drawEmpty;
@@ -98,6 +101,8 @@ struct Cell{
                 break;
             default:
                 // assert(0);
+                
+        color(255, 255, 255);
         }
     }
     
