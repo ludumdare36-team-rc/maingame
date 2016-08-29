@@ -15,28 +15,40 @@ class StatusBar {
         
         void draw(in int foodsRemaining, in int population, in int wave, in int currentHeight){
             import armos.app.basewindow;
-            /*pushMatrix;
-            translate(0, windowSize[1]/3, 0);
-            scale(1f, -1f, 1f);*/
-            pushMatrix;
-                scale(3);
+            version(Posix){
+                pushMatrix;
+                translate(0, windowSize[1]/3, 0);
+                scale(1f, -1f, 1f);
                 drawFoods(foodsRemaining);
-            popMatrix;
-            pushMatrix;
-                scale(3);
                 translate(0, 8, 0);
                 drawPopulation(population);
-            popMatrix;
-            pushMatrix;
-                scale(3);
-                translate(0, 16, 0);
+                translate(0, 8, 0);
                 drawWaveTime(wave);
-            popMatrix;
-            pushMatrix;
-                scale(3);
-                translate(0, 24, 0);
+                translate(0, 8, 0);
                 drawHeight(currentHeight);
-            popMatrix;
+                popMatrix;
+            }
+            version(Windows){
+                pushMatrix;
+                    scale(3);
+                    drawFoods(foodsRemaining);
+                popMatrix;
+                pushMatrix;
+                    scale(3);
+                    translate(0, 8, 0);
+                    drawPopulation(population);
+                popMatrix;
+                pushMatrix;
+                    scale(3);
+                    translate(0, 16, 0);
+                    drawWaveTime(wave);
+                popMatrix;
+                pushMatrix;
+                    scale(3);
+                    translate(0, 24, 0);
+                    drawHeight(currentHeight);
+                popMatrix;
+            }
         }
         
         void drawFoods(in int num){
