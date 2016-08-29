@@ -22,6 +22,7 @@ class Tower{
         }
         import game.resources;
         _hammer = (new armos.audio.Source).buffer(sounds("data/hammer"));
+        _hammerBad = (new armos.audio.Source).buffer(sounds("data/cell_denied"));
         _click = (new armos.audio.Source).buffer(sounds("data/click"));
         _clickBad = (new armos.audio.Source).buffer(sounds("data/bad"));
     }
@@ -147,7 +148,9 @@ class Tower{
                 addFloor;
             }
             _hammer.play;
+            return;
         }
+        _hammerBad.play;
     }
     
     void addFloor(){
@@ -218,6 +221,7 @@ class Tower{
         Cell*[] _depots;
         int _foods = 0;
         armos.audio.Source _hammer;
+        armos.audio.Source _hammerBad;
         armos.audio.Source _click;
         armos.audio.Source _clickBad;
         
