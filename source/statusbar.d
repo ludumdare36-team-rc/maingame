@@ -60,7 +60,7 @@ class StatusBar {
             }else{
             import std.conv;
 			_font.draw(
-				"Next wave  : " ~ text(num),
+				"Next wave  : " ~ text(num) ~ "s",
 				0,0
 			);
             }
