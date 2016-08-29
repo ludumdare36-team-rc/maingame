@@ -59,7 +59,6 @@ class Game {
         void draw(){
             import std.stdio;
             _tower.foods.writeln;
-            ar.graphics.pushMatrix;
             ar.math.Vector2i cursorPos = _tower.cursorPosition;
             if(_cellCount - cursorPos[1] + _dispFloor < 2){
                 _dispFloor++;
@@ -67,8 +66,10 @@ class Game {
             if(cursorPos[1] - _dispFloor < 2 && _dispFloor >0){
                 _dispFloor--;
             }
+            ar.graphics.pushMatrix;
             ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawTower;
+            ar.graphics.translate(0, -_dispFloor * _cellSize, 0);
             drawEntities;
             ar.graphics.popMatrix;
             import std.algorithm;
@@ -258,15 +259,13 @@ class TestApp : ar.app.BaseApp{
                     ar.graphics.popMatrix;
                 ar.graphics.popMatrix;
 
-                ar.graphics.pushMatrix;
-                    ar.graphics.scale(1f, -1f, 1f);
-                    auto font = new ar.graphics.BitmapFont;
-                    font.load("font.png", 8, 8);
-                    font.draw(
-                            "PRESS ANY KEY !",
-                            64+16,-128
-                            );
-                ar.graphics.popMatrix;
+                ar.graphics.scale(1f, -1f, 1f);
+                auto font = new ar.graphics.BitmapFont;
+                font.load("font.png", 8, 8);
+                font.draw(
+                        "PRESS ANY KEY !",
+                        64+16,-128
+                        );
                 break;
                 
             case GameStatus.Guide:
@@ -303,19 +302,15 @@ PRESS ANY KEY !",
                         ar.graphics.translate(-64, 64, 0);
                         gameoverImage.draw;
                     ar.graphics.popMatrix;
-                    
-                    ar.graphics.pushMatrix;
-                        ar.graphics.scale(1f, -1f, 1f);
-                        auto font = new ar.graphics.BitmapFont;
-                        font.load("font.png", 8, 8);
-                        font.draw(
-                                "GAMEOVER",
-                                -32,-128-64
-                                );
-                    ar.graphics.popMatrix;
                 ar.graphics.popMatrix;
                 
-                
+                ar.graphics.scale(1f, -1f, 1f);
+                auto font = new ar.graphics.BitmapFont;
+                font.load("font.png", 8, 8);
+                font.draw(
+                        "GAMEOVER",
+                        -32,-128-64
+                        );
                 break;
                 
             default:
