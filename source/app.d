@@ -246,7 +246,11 @@ class TestApp : ar.app.BaseApp{
     override void draw(){
         ar.graphics.pushMatrix;
         ar.graphics.translate(0, ar.app.windowSize[1], 0);
-        ar.graphics.scale(_scale);
+        int scale = _scale;
+        if(_state != GameStatus.Playing){
+            scale = 2;
+        }
+        ar.graphics.scale(scale);
         ar.graphics.scale(1f, -1f, 1f);
         
         switch (_state) {
@@ -255,7 +259,7 @@ class TestApp : ar.app.BaseApp{
                 ar.graphics.pushMatrix;
                     ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
                     ar.graphics.pushMatrix;
-                        ar.graphics.translate(-128, 32, 0);
+                        ar.graphics.translate(-80, 0, 0);
                         titleImage.draw;
                     ar.graphics.popMatrix;
                 ar.graphics.popMatrix;
@@ -265,7 +269,7 @@ class TestApp : ar.app.BaseApp{
                 font.load("font.png", 8, 8);
                 font.draw(
                         "PRESS ANY KEY !",
-                        64+16,-128
+                        64+32,-128+16
                         );
                 break;
                 
@@ -276,64 +280,64 @@ class TestApp : ar.app.BaseApp{
                     import armos.graphics;
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Let's make the highest", 4, 0);
+                        ar.graphics.scale(scale);
+                        font.draw("Let's make the highest", 32, 32);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("tower in the space.", 4, 8*2);
+                        ar.graphics.scale(scale);
+                        font.draw("tower in the space.", 32, 32 + 8 * 2);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("No warehouse is", 4, 8*3);
+                        ar.graphics.scale(scale);
+                        font.draw("No warehouse is", 32, 32 + 8 * 3);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("game over.", 4, 8*4);
+                        ar.graphics.scale(scale);
+                        font.draw("game over.", 32, 32 + 8 * 4);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Enemies try", 4, 8*5);
+                        ar.graphics.scale(scale);
+                        font.draw("Enemies try", 32, 32 + 8 * 5);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("to break warehouse.", 4, 8*6);
+                        ar.graphics.scale(scale);
+                        font.draw("to break warehouse.", 32, 32 + 8 * 6);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("To save food,", 4, 8*7);
+                        ar.graphics.scale(scale);
+                        font.draw("To save food,", 32, 32 + 8 * 7);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("make the house and weapon.", 4, 8*8);
+                        ar.graphics.scale(scale);
+                        font.draw("make the house and weapon.", 32, 32 + 8 * 8);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Then, Pop can go to space!", 4, 8*9);
+                        ar.graphics.scale(scale);
+                        font.draw("Then, Pop can go to space!", 32, 32 + 8 * 9);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Move           : Cursor Keys", 4 , 8*10);
+                        ar.graphics.scale(scale);
+                        font.draw("Move           : Cursor Keys", 32 , 32 + 8 * 10);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Build House    : Z", 4 , 8*11);
+                        ar.graphics.scale(scale);
+                        font.draw("Build House    : Z", 32, 32 + 8 * 11);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Build Weapon   : X", 4 , 8*12);
+                        ar.graphics.scale(scale);
+                        font.draw("Build Weapon   : X", 32, 32 + 8 * 12);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Build warehouse: C", 4 , 8*13);
+                        ar.graphics.scale(scale);
+                        font.draw("Build warehouse: C", 32, 32 + 8 * 13);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("Build Ladder   : V", 4 , 8*14);
+                        ar.graphics.scale(scale);
+                        font.draw("Build Ladder   : V", 32, 32 + 8 * 14);
                     popMatrix;
                     pushMatrix;
-                        ar.graphics.scale(_scale);
-                        font.draw("PRESS ANY KEY !", 4 , 8*17);
+                        ar.graphics.scale(scale);
+                        font.draw("PRESS ANY KEY !", 32, 32 + 8 * 17);
                     popMatrix;
                 }else{
                     ar.graphics.pushMatrix;
@@ -350,7 +354,7 @@ Build Ladder   : V
 
 
 PRESS ANY KEY !",
-                            32, -ar.app.windowSize[1]/_scale+32
+                            32, -ar.app.windowSize[1]/scale+32
                             );
                     ar.graphics.popMatrix;
                 }
@@ -363,7 +367,7 @@ PRESS ANY KEY !",
             case GameStatus.Gameover:
                 auto gameoverImage = animations("gameover", 1).index(0);
                 ar.graphics.pushMatrix;
-                    ar.graphics.translate(ar.app.windowSize[0]/2/_scale, 0, 0);
+                    ar.graphics.translate(ar.app.windowSize[0]/2/scale, 0, 0);
                     ar.graphics.pushMatrix;
                         ar.graphics.translate(-64, 64, 0);
                         gameoverImage.draw;
@@ -375,7 +379,7 @@ PRESS ANY KEY !",
                 font.load("font.png", 8, 8);
                 font.draw(
                         "GAMEOVER",
-                        -32,-128-64
+                        128,-128-64
                         );
                 break;
                 
