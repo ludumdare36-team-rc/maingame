@@ -22,6 +22,7 @@ class StatusBar {
             import armos.app.basewindow;
             version(Windows){
                 pushMatrix;
+                scale(3);
                 color(0, 0, 0, 128);
                 _rect.drawFill;
                 color(255, 255, 255, 255);
