@@ -279,10 +279,74 @@ class TestApp : ar.app.BaseApp{
                 break;
                 
             case GameStatus.Guide:
-                ar.graphics.pushMatrix;
-                    ar.graphics.scale(1f, -1f, 1f);
+                version(Windows){
+                    import armos.graphics;
+                    popMatrix;
                     auto font = new ar.graphics.BitmapFont;
                     font.load("font.png", 8, 8);
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Let's make the highest", 4, 0);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("tower in the space.", 4, 8*2);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("No warehouse is", 4, 8*3);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("game over.", 4, 8*4);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Enemies try", 4, 8*5);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("to break warehouse.", 4, 8*6);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("To save food,", 4, 8*7);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("make the house and weapon.", 4, 8*8);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Then, Pop can go to space!", 4, 8*9);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Move           : Cursor Keys", 4 , 8*10);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Build House    : Z", 4 , 8*11);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Build Weapon   : X", 4 , 8*12);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Build warehouse: C", 4 , 8*13);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("Build Ladder   : V", 4 , 8*14);
+                    popMatrix;
+                    pushMatrix;
+                        ar.graphics.scale(_scale);
+                        font.draw("PRESS ANY KEY !", 4 , 8*17);
+                    popMatrix;
+                }else{
+                    ar.graphics.pushMatrix;
+                    ar.graphics.scale(1f, -1f, 1f);
                     font.draw(
                             "Let's make the highest \ntower in the space. \nNo warehouse is \ngame over.\nEnemies try \nto break warehouse. \nTo save food,\nmake the house and weapon. \nThen,Pop can go to space!
 
@@ -297,7 +361,8 @@ Build Ladder   : V
 PRESS ANY KEY !",
                             32, -ar.app.windowSize[1]/_scale+32
                             );
-                ar.graphics.popMatrix;
+                    ar.graphics.popMatrix;
+                }
                 break;
                 
             case GameStatus.Playing:
