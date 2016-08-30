@@ -1,2 +1,10 @@
-ludumdare36-team-rc/maingame(tentative)
+The Babel
 ====
+
+##require
+
+- glfw3
+- openAL
+- freeimage
+- ogg
+- vorbis
