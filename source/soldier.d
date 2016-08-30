@@ -138,11 +138,9 @@ class Soldier : Entity{
         
         void attack(){
             import std.random;
-            import std.stdio;
             import std.conv;
             import std.algorithm;
             import std.array;
-            text("enemy:", _cell.entities.filter!(e=>e.type==EntityType.Enemy).array.length).writeln;
             foreach (enemy; _cell.entities.filter!(e=>e.type==EntityType.Enemy).array) {
                 if(uniform(0, 15)==1)enemy.damage = 1;
             }

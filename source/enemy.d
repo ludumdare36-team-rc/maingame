@@ -27,10 +27,6 @@ class Enemy : Entity{
         
         ///
         void damage(in int damage){_life-=damage;
-            import std.stdio;
-            "damaged".writeln;
-            import std.conv;
-            text("life", _life).writeln;
         }
         
         ///
@@ -80,8 +76,6 @@ class Enemy : Entity{
                     }
                     break;
                     case EnemyMoving.Up:
-                    import std.stdio;
-                        "up".writeln;
                         if(_cell.up != null && _cell.type != CellType.Ludder && _pos[1]%Cell.size == 0){
                             if(uniform(0, 1) == 1){
                                 _moving = EnemyMoving.Left;

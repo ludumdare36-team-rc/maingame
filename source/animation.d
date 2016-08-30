@@ -104,8 +104,6 @@ class Animation {
             import std.range;
             if(_maxImages == 1){
                 string fileName = _imageNamePrefix ~ ".png";
-                import std.stdio;
-                fileName.writeln;
                 _imageLoader.load(fileName);
                 Texture tmp = _imageLoader.texture;
                 tmp.setMinMagFilter(TextureFilter.Nearest);
@@ -113,8 +111,6 @@ class Animation {
             }else{
                 foreach (size_t i; _maxImages.iota.array) {
                     string fileName = animationFileName(_imageNamePrefix, i);
-                    import std.stdio;
-                    fileName.writeln;
                     _imageLoader.load(fileName);
                     Texture tmp = _imageLoader.texture;
                     tmp.setMinMagFilter(TextureFilter.Nearest);

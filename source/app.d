@@ -57,8 +57,6 @@ class Game {
 
         ///
         void draw(){
-            import std.stdio;
-            _tower.foods.writeln;
             ar.math.Vector2i cursorPos = _tower.cursorPosition;
             if(_cellCount - cursorPos[1] + _dispFloor < 2){
                 _dispFloor++;
@@ -112,13 +110,6 @@ class Game {
                     break;
                 case ar.utils.KeyType.V:
                     _tower.buildCellToCurrentCursor(CellType.Ludder);
-                    break;
-                //debug
-                case ar.utils.KeyType.Enter:
-                    _tower.buildCellToCurrentCursor(CellType.Broken);
-                    break;
-                case ar.utils.KeyType.H:
-                    _isBattle = true;
                     break;
                 default:
             }
