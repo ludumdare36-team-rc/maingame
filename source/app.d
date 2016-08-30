@@ -279,11 +279,11 @@ class TestApp : ar.app.BaseApp{
                 break;
                 
             case GameStatus.Guide:
+                auto font = new ar.graphics.BitmapFont;
+                font.load("font.png", 8, 8);
                 version(Windows){
                     import armos.graphics;
                     popMatrix;
-                    auto font = new ar.graphics.BitmapFont;
-                    font.load("font.png", 8, 8);
                     pushMatrix;
                         ar.graphics.scale(_scale);
                         font.draw("Let's make the highest", 4, 0);
