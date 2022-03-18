@@ -15,7 +15,7 @@ Build Weapon   : X
 Build Warehouse: C
 Build Ladder   : V
 
-##require
+## require
 
 - glfw3
 - openAL
@@ -23,7 +23,7 @@ Build Ladder   : V
 - ogg
 - vorbis
 
-##Staff
+## Staff
 
 Programing : tanitta, ray45422
 Sound : OtObOx
